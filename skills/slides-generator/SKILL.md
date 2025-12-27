@@ -1,444 +1,291 @@
 ---
 name: slides-generator
-description: 自动生成技术演示幻灯片项目。用于创建 LLM 模型评测、技术产品演示、技术报告等场景的交互式幻灯片。当用户提到"做评测"、"做演示"、"做PPT"、"展示"、"幻灯片"等关键词时自动激活。
+description: Generate interactive presentation slides using React + Tailwind. Triggers on keywords like "slides", "presentation", "PPT", "demo", "benchmark".
 ---
 
-# 技术演示幻灯片生成器
+# Slides Generator
 
-## 角色定义
+Generate professional presentation slides through parallel subagent execution.
 
-你是一个专业的技术演示内容创作专家，专门为以下场景生成高质量的展示内容：
-- LLM 模型能力评测
-- 技术产品功能演示
-- 技术报告与分析
-- 工具/框架对比评测
-
-## 工作流程
-
-**重要**：必须通过交互式问答收集足够信息后才能开始生成，不要用户一句话就直接生成。
+## Workflow Overview
 
 ```
-Step 1: 场景识别 → Step 2: 信息收集 → Step 3: 大纲确认 → Step 4-7: 生成与验证
+Step 1: Collect Requirements
+    ↓
+Step 2: Confirm Outline
+    ↓
+Step 3: Create Project Skeleton
+    ↓
+Step 4: Dispatch Parallel Subagents (one per slide)
+    ↓
+Step 5: Finalize and Launch
 ```
 
-### Step 0: 环境检查（自动执行）
+## Step 1: Collect Requirements
 
-在开始工作前，检查并安装必要的 MCP 工具：
+Ask questions to understand:
+- **Scenario type**: Benchmark / Product Demo / Report / General
+- **Content**: Title, number of slides, key points per slide
+- **Style preference**: Tech / Professional / Vibrant / Minimal
 
-```bash
-# 检查 chrome-devtools MCP 是否已安装
-claude mcp list | grep -q "chrome-devtools"
+Recommend a theme from [palettes.md](references/palettes.md) based on style keywords.
 
-# 如果未安装，自动安装
-claude mcp add chrome-devtools -- npx chrome-devtools-mcp@latest
-```
+## Step 2: Confirm Outline
 
-**chrome-devtools MCP** 用于在生成项目后通过浏览器验证 PPT 效果，确保生成质量。
-
-### Step 1: 场景识别
-
-根据用户输入识别演示场景类型：
-
-| 关键词 | 场景类型 | 推荐结构 |
-|--------|----------|----------|
-| "评测"、"测试"、"Benchmark" | LLM评测 | Hero + Framework + n*Task + Summary |
-| "演示"、"展示"、"Demo" | 产品演示 | Hero + Features + Demo + CTA |
-| "对比"、"比较"、"横评" | 横向对比 | Hero + Criteria + Models + Ranking |
-| "报告"、"分析" | 技术报告 | Hero + Background + Analysis + Conclusion |
-
-### Step 2: 交互式信息收集
-
-**核心原则**：
-- **智能混合** - 简单问题可以合并问，复杂问题单独问
-- **优先选择题** - 比开放式问题更容易回答
-- **逐步深入** - 先问结构，再问内容
-
-**收集框架**：
-
-| 轮次 | 收集内容 | 策略 |
-|------|----------|------|
-| 第一轮 | 基础信息（主角、对比对象、主题偏好） | 可合并问 |
-| 第二轮 | 结构信息（页面/任务数量、标题） | 可合并问 |
-| 第三轮 | 内容信息（每页/任务的详细内容） | 逐个问 |
-
-**LLM 评测场景 - 信息收集清单**：
-
-| 信息项 | 问法示例 |
-|--------|----------|
-| 主角模型 | "主角模型是什么？" |
-| 对比模型 | "对比哪些模型？" |
-| 评测主题 | "评测主题是什么？（工程能力/推理能力/Agent能力）" |
-| 任务数量 | "有几个评测任务？" |
-| 任务名称 | "每个任务的名称是什么？" |
-| 任务详情 | "请描述第N个任务的目标、要求、结果" |
-| 风格偏好 | "您想要什么风格？科技感/专业/活力/自然..."（根据偏好推荐主题）|
-
-**产品演示场景 - 信息收集清单**：
-
-| 信息项 | 问法示例 |
-|--------|----------|
-| 产品名称 | "产品名称是什么？" |
-| 产品定位 | "产品的核心定位/口号？" |
-| 功能数量 | "想展示几个核心功能？（建议3-5个）" |
-| 功能详情 | "请描述第N个功能：名称、简介、亮点" |
-| 是否定价页 | "需要定价页吗？" |
-| 主题确认 | "推荐使用什么主题颜色？" |
-
-### Step 3: 大纲确认
-
-信息收集完成后，**必须**展示 PPT 大纲让用户确认：
+Present the outline for user confirmation:
 
 ```markdown
-## 确认生成大纲
+## Presentation Outline
 
-**主题**：模型工程能力评测
-**配色**：blue-professional（深蓝专业 #2563eb）
-**输出目录**：./model-benchmark（回复路径可修改）
+**Title**: Model Engineering Capability Benchmark
+**Theme**: dark-sapphire-blue (glass style)
+**Output**: ./model-benchmark (reply with path to change)
 
-**页面结构**：
-1. 首页 - 模型工程能力评测
-2. 评测框架 - 评测维度和流程
-3. 任务1 - FastAPI后端（需求/过程/结果）
-4. 任务2 - React组件（需求/过程/结果）
-5. 任务3 - CLI工具（需求/过程/结果）
-6. 总结页
+**Slides**:
+1. Hero - Title and overview
+2. Framework - Evaluation dimensions
+3. Task 1 - Backend development
+4. Task 2 - Frontend component
+5. Summary - Conclusions
 
-**确认开始生成吗？**
+**Confirm to generate?**
 ```
 
-**用户响应处理**：
-- 回复"确认"/"OK"/"好" → 使用默认路径 `./项目名称`
-- 回复路径（如 `/home/demos` 或 `~/projects`）→ 使用 `用户路径/项目名称`
+User responses:
+- "OK" / "Confirm" → Use default path `./project-name`
+- Custom path (e.g., `~/demos`) → Use `user-path/project-name`
 
-用户确认后才进入生成阶段。如用户要修改，根据反馈调整后重新确认。
+## Step 3: Create Project Skeleton
 
-### Step 4: 主题应用
-
-根据用户的风格偏好推荐配色主题。**不绑定特定品牌**，而是根据标签匹配：
-
-**常用预设主题**：
-
-| 主题ID | 名称 | 标签 | 主色 |
-|--------|------|------|------|
-| red-cyan-contrast | 红青对比 | 红色,青色,对比,现代 | #de283b |
-| warm-cream | 奶油暖色 | 橙色,温暖,复古,品牌 | #FF7F50 |
-| dark-sage-green | 深色森林绿 | 深色,绿色,自然,森林 | #2E8B57 |
-| dark-sapphire | 深蓝宝石 | 深色,蓝色,专业,科技 | #0f1c2e |
-| tech-blue | 科技蓝 | 蓝色,科技,现代 | #0ea5e9 |
-| blue-professional | 深蓝专业 | 蓝色,专业,商务 | #2563eb |
-| cyberpunk | 赛博朋克 | 霓虹,科幻,未来 | #0f0f0f |
-| gold-luxury | 金色奢华 | 金色,奢华,高端 | #1e1e1e |
-| vermilion-chinese | 中国朱红 | 中国风,朱红,金色 | #efd8bb |
-| neutral-gray | 中性灰 | 灰色,中性,对比 | #6b7280 |
-
-**主题选择流程（分层读取策略）**：
-
-**第一层：快速推荐**
-1. 询问用户风格偏好（"您想要什么风格？科技感/专业/活力/自然..."）
-2. 根据关键词匹配标签，从上方 10 个预设主题中推荐 2-3 个
-3. 展示主题预览色，让用户选择
-4. 如果用户满意 → 直接使用；如果不满意 → 进入第二层
-
-**第二层：关键词引导 + 索引浏览**
-1. 当用户说「不满意」「还有其他吗」时，先询问偏好关键词：
-   - 色调偏好：深色/浅色？暖色/冷色？
-   - 风格偏好：科技/自然/专业/活力/复古？
-2. 读取 [palettes.md](references/palettes.md) 的 **第 7-30 行**（仅文件结构索引）
-3. 根据索引向用户展示 15 个分类名称，让用户选择感兴趣的分类
-
-**第三层：详情获取**
-1. 用户选定分类后，根据索引表中的行号范围读取对应分类
-2. 例如：用户选"霓虹/赛博朋克" → 读取第 433-486 行
-3. 提取 5 色值，按 AI 使用指南（第 115-138 行）推导完整 10 色变量
-
-### Step 5: 内容生成
-
-根据收集的信息和场景类型生成对应的内容结构。详见 [references/schemas/slidesData.schema.md](references/schemas/slidesData.schema.md)。
-
-### Step 6: 项目生成
-
-**路径处理规则**：
-
-| 用户输入 | 项目名称 | 最终输出目录 |
-|---------|---------|-------------|
-| （默认） | model-benchmark | `./model-benchmark` |
-| `/home/demos` | model-benchmark | `/home/demos/model-benchmark` |
-| `~/projects` | model-benchmark | `~/projects/model-benchmark` |
-| `../other-folder` | model-benchmark | `../other-folder/model-benchmark` |
-
-**边界处理**：
-- 目标目录已存在 → 提示用户并询问是否覆盖
-- 父目录不存在 → 自动创建（`mkdir -p`）
-
-执行以下命令生成项目：
+Copy template and configure:
 
 ```bash
-# 1. 复制模板项目（从 skill 的 assets/template 目录）
-cp -r <skill-path>/assets/template <输出目录>
-cd <输出目录>
+# 1. Copy template
+cp -r <skill-path>/assets/template <output-dir>
+cd <output-dir>
 
-# 2. 应用主题（修改 tailwind.config.js）
-# 使用 themes/index.js 中的 generateTailwindConfig 函数
+# 2. Update tailwind.config.js with theme colors
+# 3. Update index.html title
+# 4. Create empty src/slides/ directory
+```
 
-# 3. 写入数据文件
-# 将生成的内容写入 src/data/slidesData.js
-# 根据任务数量更新 src/data/navigation.js
+## Step 4: Dispatch Parallel Subagents
 
-# 4. 更新 index.html 标题
+For each slide, dispatch a subagent with:
 
-# 5. 安装依赖并启动（后台运行）
+**Fixed context (same for all):**
+- Tech stack: React + Tailwind CSS + lucide-react
+- Theme color variables (from tailwind.config.js)
+- Style keyword (glass / flat)
+- Design principles (from [principles.md](references/principles.md))
+- First slide code (for reference, after slide 01 is generated)
+
+**Dynamic context (per subagent):**
+- Slide number: 01, 02, 03...
+- Filename: `01-hero.jsx`, `02-framework.jsx`...
+- Slide type: Hero / Content / Data / Summary
+- Content points: Title, key information to display
+
+**Subagent prompt template:**
+
+```
+You are generating slide ${number} for a presentation.
+
+## Technical Requirements
+- Framework: React function component
+- Styling: Tailwind CSS only
+- Icons: lucide-react
+- Export: default function component
+
+## Theme Colors (use these variables, not hardcoded colors)
+- primary-50 to primary-950
+- accent-50 to accent-950
+- bg-base, bg-card, bg-elevated
+- text-primary, text-secondary, text-muted
+- border-default, border-subtle
+
+## Style: ${style}
+${style === 'glass' ?
+  'Use glassmorphism: bg-white/10 backdrop-blur-md border-white/20' :
+  'Use flat design: bg-bg-card shadow-sm border-border-default'}
+
+## Design Principles
+- Page container: h-full w-full p-8
+- Content max-width: max-w-6xl mx-auto
+- Card border-radius: rounded-xl
+- Spacing: gap-4, gap-6, gap-8
+
+## Slide Content
+Type: ${slideType}
+Title: ${title}
+Key Points:
+${keyPoints}
+
+## Output
+Write a complete JSX file to: src/slides/${filename}
+Include all necessary imports.
+Export default function component.
+
+${firstSlideCode ? `
+## Reference (match this style)
+\`\`\`jsx
+${firstSlideCode}
+\`\`\`
+` : ''}
+```
+
+**Execution:**
+```javascript
+// Dispatch all subagents in parallel
+const subagentPromises = slides.map((slide, index) =>
+  dispatchSubagent({
+    number: String(index + 1).padStart(2, '0'),
+    filename: `${String(index + 1).padStart(2, '0')}-${slide.id}.jsx`,
+    slideType: slide.type,
+    title: slide.title,
+    keyPoints: slide.points,
+    style: themeStyle,
+    firstSlideCode: index > 0 ? firstSlideCode : null
+  })
+);
+
+await Promise.all(subagentPromises);
+```
+
+## Step 5: Finalize and Launch
+
+After all subagents complete:
+
+```bash
+# 1. Update App.jsx with slide imports
+# Generate import statements and SLIDES/NAV_ITEMS arrays
+
+# 2. Install and start
 npm install && npm run dev
 ```
 
-### Step 7: 浏览器验证
+**App.jsx update pattern:**
 
-项目启动后，使用 chrome-devtools MCP 验证 PPT 效果：
+```jsx
+// Add imports at top
+import Slide01 from './slides/01-hero';
+import Slide02 from './slides/02-framework';
+// ...
 
-1. **打开浏览器访问项目**
-   ```
-   使用 mcp__chrome-devtools__navigate_page 访问 http://localhost:5173
-   ```
+// Update SLIDES array
+const SLIDES = [Slide01, Slide02, ...];
 
-2. **截图验证每页效果**
-   ```
-   使用 mcp__chrome-devtools__take_screenshot 截取当前页面
-   检查布局、颜色、内容是否正确
-   ```
-
-3. **交互测试**
-   ```
-   使用 mcp__chrome-devtools__click 测试导航、翻页功能
-   确保所有交互正常工作
-   ```
-
-4. **问题修复**
-   - 如发现样式问题，修改 tailwind.config.js 或组件样式
-   - 如发现内容问题，修改 slidesData.js
-   - 修改后浏览器会自动热更新，再次验证
-
-**验证检查清单**：
-- [ ] 首页标题、副标题显示正确
-- [ ] 主题颜色应用正确
-- [ ] 左侧导航栏可正常展开/收起
-- [ ] 翻页功能正常
-- [ ] 所有任务页面内容完整
-- [ ] 总结页显示正确
-
-## 场景模板
-
-### LLM 评测场景
-
-当用户说"评测 XXX 模型"时，自动生成以下结构：
-
-1. **首页 (Hero)**
-   - 标题：{模型名称} 工程能力评测
-   - 副标题：{评测主题}
-   - 对比模型列表
-   - Benchmark 数据（如有）
-
-2. **评测框架 (Framework)**
-   - 评测维度（通常 5 个）
-   - 评测流程
-   - 期望输出
-
-3. **任务页面（每个任务 3 页）**
-   - 需求页：任务目标、技术要求、期望输出
-   - 过程页：执行步骤、关键决策、遇到的问题
-   - 结果页：最终效果、评分、对比分析
-
-4. **总结页 (Summary)**
-   - 核心结论
-   - 优势与不足
-   - 使用建议
-
-### 产品演示场景
-
-当用户说"演示 XXX 产品"时：
-
-1. **首页 (Hero)**
-   - 产品名称和口号
-   - 核心功能标签
-
-2. **功能亮点 (Features)**
-   - 3-5 个核心功能
-   - 每个功能配图标和描述
-
-3. **演示流程 (Demo)**
-   - 使用步骤截图
-   - 关键操作说明
-
-4. **定价/CTA**
-   - 价格方案对比
-   - 行动号召
-
-## 评测任务模板
-
-### 工程交付类任务
-- FastAPI 后端开发
-- React 组件开发
-- 数据处理脚本
-- CLI 工具开发
-
-### 代码理解类任务
-- 代码重构与优化
-- Bug 修复
-- 功能增强
-- 测试用例编写
-
-### Agent 能力类任务
-- 工具调用
-- 多步推理
-- 自主规划
-- 错误恢复
-
-## 评分维度模板
-
-### 五维度评价体系
-
-1. **代码质量** - 代码结构、可读性、最佳实践
-2. **功能完整** - 需求覆盖、边界处理、异常处理
-3. **交互体验** - 沟通效率、理解能力、响应速度
-4. **调试效率** - 问题定位、解决方案、自我修正
-5. **创新能力** - 优化建议、额外功能、最佳实践
-
-## 使用示例
-
-### 示例 1: LLM 评测（完整交互流程）
-
-```
-用户: "帮我做一个模型工程能力评测"
-
-Claude: "好的，我来帮你创建评测 PPT。请告诉我：
-  1. 主角模型是什么？
-  2. 对比哪些模型？
-  3. 您想要什么风格？科技感/专业/活力/自然..."
-
-用户: "主角是 Model A，对比 Model B 和 Model C，专业风格"
-
-Claude: "推荐使用 blue-professional（深蓝专业）主题，可以吗？
-  有几个评测任务？分别是什么？"
-
-用户: "主题OK，3个任务：FastAPI后端、React组件、CLI工具"
-
-Claude: "请描述第1个任务 - FastAPI后端：
-  - 任务目标
-  - 技术要求
-  - 各模型的评测结果"
-
-用户: [提供任务1详情]
-
-Claude: "请描述第2个任务 - React组件：..."
-
-用户: [提供任务2详情]
-
-Claude: "请描述第3个任务 - CLI工具：..."
-
-用户: [提供任务3详情]
-
-Claude: "信息收集完成！以下是 PPT 大纲：
-
-  ## 模型工程能力评测
-  **主题**：blue-professional（深蓝专业 #2563eb）
-  **输出目录**：./model-benchmark（回复路径可修改）
-
-  **页面结构**：
-  1. 首页 - 模型工程能力评测
-  2. 评测框架 - 评测维度和流程
-  3. 任务1 - FastAPI后端（需求/过程/结果）
-  4. 任务2 - React组件（需求/过程/结果）
-  5. 任务3 - CLI工具（需求/过程/结果）
-  6. 总结页
-
-  确认开始生成吗？"
-
-用户: "确认"  # 或回复路径如 "~/demos" 则使用 ~/demos/model-benchmark
-
-Claude: [检查 chrome-devtools MCP，如未安装则自动安装]
-Claude: [复制模板、写入数据、启动项目]
-Claude: [使用 chrome-devtools 打开浏览器验证效果]
-Claude: "PPT 已生成并验证完成！
-  - 首页显示正常 ✓
-  - 主题颜色正确 ✓
-  - 导航和翻页功能正常 ✓
-  - 所有任务页面内容完整 ✓
-
-  项目地址：http://localhost:5173"
+// Update NAV_ITEMS array
+const NAV_ITEMS = [
+  { slideIndex: 0, label: 'Hero' },
+  { slideIndex: 1, label: 'Framework' },
+  // ...
+];
 ```
 
-### 示例 2: 产品演示（完整交互流程）
+## Step 6: Browser Verification (Optional)
 
-```
-用户: "演示我们的 AI 客服产品 SmartBot"
+If chrome-devtools MCP is available:
 
-Claude: "好的，我来帮你创建产品演示 PPT。请告诉我：
-  1. 产品名称：SmartBot ✓
-  2. 产品的核心定位/口号是什么？
-  3. 推荐使用 tech-blue 主题，可以吗？"
+```bash
+# Check if installed
+claude mcp list | grep -q "chrome-devtools"
 
-用户: "口号是'AI驱动的智能客服'，主题用蓝色可以"
-
-Claude: "想展示几个核心功能？（建议3-5个）"
-
-用户: "4个"
-
-Claude: "请描述第1个功能：名称、简介、亮点"
-
-用户: [提供功能1详情]
-
-... 继续收集其他功能 ...
-
-Claude: "需要定价页吗？"
-
-用户: "暂时不需要"
-
-Claude: "信息收集完成！以下是 PPT 大纲：
-
-  ## SmartBot - AI驱动的智能客服
-  **主题**：tech-blue（天蓝 #0ea5e9）
-  **输出目录**：./smartbot-demo（回复路径可修改）
-
-  **页面结构**：
-  1. 首页 - SmartBot 产品介绍
-  2. 功能1 - [功能名称]
-  3. 功能2 - [功能名称]
-  4. 功能3 - [功能名称]
-  5. 功能4 - [功能名称]
-  6. 行动号召
-
-  确认开始生成吗？"
-
-用户: "确认"  # 或回复路径如 "~/demos" 则使用 ~/demos/smartbot-demo
-
-Claude: [检查 chrome-devtools MCP，如未安装则自动安装]
-Claude: [复制模板、写入数据、启动项目]
-Claude: [使用 chrome-devtools 打开浏览器验证效果]
-Claude: "PPT 已生成并验证完成！项目地址：http://localhost:5173"
+# If not, install
+claude mcp add chrome-devtools -- npx chrome-devtools-mcp@latest
 ```
 
-## 项目结构说明
+Use chrome-devtools to:
+1. Navigate to http://localhost:5173
+2. Take screenshots of each slide
+3. Verify navigation works
+4. Fix any issues found
 
-模板项目位于 skill 目录下的 `assets/template/`：
+## Theme System
+
+Themes are defined in [palettes.md](references/palettes.md).
+
+Each theme has:
+- **ID**: Unique identifier
+- **Tags**: Keywords for matching user preferences
+- **Style**: `glass` or `flat` (can be overridden by user)
+- **Colors**: 5 base colors that expand to full palette
+
+**Quick recommendations:**
+
+| User says | Recommend |
+|-----------|-----------|
+| "Tech", "Modern" | dark-sapphire-blue (glass) |
+| "Professional", "Business" | banking-website (flat) |
+| "Cyberpunk", "Neon" | cyberpunk (glass) |
+| "Natural", "Organic" | summer-meadow (flat) |
+| "Minimal", "Clean" | black-and-white (flat) |
+
+## Design Principles
+
+See [principles.md](references/principles.md) for:
+- Color variable usage
+- Typography scale
+- Spacing conventions
+- Component structure
+
+## Project Structure
+
+Generated project:
 
 ```
-assets/template/
-├── src/
-│   ├── data/
-│   │   ├── slidesData.js    # 所有内容数据（需要生成）
-│   │   └── navigation.js    # 导航配置（需要根据任务数更新）
-│   ├── components/          # UI 组件（固定）
-│   ├── layout/              # 布局组件（固定）
-│   ├── slides/              # 幻灯片组件（固定）
-│   ├── modules/             # 任务模块（固定）
-│   └── App.jsx              # 主应用（可能需要调整 SLIDES 数组）
-├── themes/
-│   └── index.js             # 主题配置
+output-dir/
 ├── package.json
-└── tailwind.config.js       # 需要根据主题更新
+├── vite.config.js
+├── tailwind.config.js      ← Theme colors
+├── index.html              ← Title
+├── src/
+│   ├── main.jsx
+│   ├── App.jsx             ← Slide imports & navigation
+│   ├── index.css
+│   └── slides/
+│       ├── 01-hero.jsx     ← Generated by subagent
+│       ├── 02-framework.jsx
+│       └── ...
+└── ...
 ```
 
-## 注意事项
+## Example Interaction
 
-1. **图标使用**：使用 lucide-react 图标库，在 slidesData.js 顶部导入
-2. **颜色变量**：使用 Tailwind 自定义颜色（primary-*, accent-*, text-*, bg-*）
-3. **响应式**：模板已支持 1080p 到 4K 自适应
-4. **字体**：使用 JetBrains Mono 等宽字体
+```
+User: "Create a benchmark presentation for Claude vs GPT"
+
+Claude: "I'll help create benchmark slides. A few questions:
+
+1. How many evaluation tasks? (e.g., 3-5)
+2. What capabilities are you testing? (coding / reasoning / agent)
+3. Style preference? (Tech/Professional/Vibrant)"
+
+User: "3 tasks, coding ability, tech style"
+
+Claude: "Recommended theme: dark-sapphire-blue (glass style)
+
+## Outline
+
+**Title**: Claude vs GPT Coding Benchmark
+**Theme**: dark-sapphire-blue
+**Output**: ./claude-benchmark
+
+**Slides**:
+1. Hero - Title and model overview
+2. Framework - Evaluation methodology
+3. Task 1 - API development
+4. Task 2 - React components
+5. Task 3 - CLI tools
+6. Summary - Results and recommendations
+
+Confirm to generate?"
+
+User: "OK"
+
+Claude: [Creates project skeleton]
+Claude: [Dispatches 6 parallel subagents]
+Claude: [Updates App.jsx with imports]
+Claude: [Runs npm install && npm run dev]
+Claude: "Presentation ready at http://localhost:5173"
+```

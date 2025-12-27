@@ -32,84 +32,84 @@
 
 ## 快速查询索引
 
-| ID | 名称 | 标签 | 推荐场景 | 跳转 |
-|----|------|------|----------|------|
-| 01 | Dark Sapphire Blue | 深色,蓝色,专业,科技 | 科技产品,暗黑模式 | [→](#dark-sapphire-blue) |
-| 02 | dark-blue-green-red | 深色,多彩,对比强烈 | 视觉冲击 | [→](#dark-blue-green-red) |
-| 03 | dark-blue-red-blush | 深色,蓝色,红色点缀 | 深色科技 | [→](#dark-blue-red-blush) |
-| 04 | Dark Sage Green | 深色,绿色,自然 | 自然/环保 | [→](#dark-sage-green) |
-| 05 | purple-dark-black-blue | 深色,紫色,霓虹 | 赛博朋克 | [→](#purple-dark-black-blue) |
-| 06 | gold-dark | 深色,金色,奢华 | 奢侈品牌 | [→](#gold-dark) |
-| 07 | dark-dull-peach | 深色,桃色,温暖 | 温暖深色 | [→](#dark-dull-peach) |
-| 08 | dark-brick-mustard | 深色,黄色,红色 | 活力深色 | [→](#dark-brick-mustard) |
-| 09 | dark-chartreuse | 深色,黄绿色,自然 | 自然科技 | [→](#dark-chartreuse) |
-| 10 | dark-lavendar | 深色,紫色,浪漫 | 浪漫深色 | [→](#dark-lavendar) |
-| 11 | moody-intense-red | 深色,红色,强烈,热情 | 热情展示 | [→](#moody-intense-red) |
-| 12 | maroon-dull-browns | 深色,栗色,棕色,复古 | 复古风格 | [→](#maroon-dull-browns) |
-| 13 | space | 深色,太空,星空,金色点缀 | 科幻太空 | [→](#space) |
-| 14 | starry-night | 深色,星空,艺术,梵高风格 | 艺术展示 | [→](#starry-night) |
-| 15 | moon-and-mars | 深色,太空,火星色 | 太空主题 | [→](#moon-and-mars) |
-| 16 | Electric City Nights | 深色,蓝色,城市,科技 | 科技产品 | [→](#electric-city-nights) |
-| 17 | hacker-news | 深色,橙色,科技,极客 | 极客/开发者 | [→](#hacker-news) |
-| 18 | minimal-modern-light | 浅色,极简,蓝色,现代 | 企业官网 | [→](#minimal-modern-light) |
-| 19 | white-with-blue | 浅色,蓝色,清新 | 清新产品 | [→](#white-with-blue) |
-| 20 | black-and-white | 极简,黑白,经典 | 极简设计 | [→](#black-and-white) |
-| 21 | blueberry-contrast | 浅色,柔和,对比 | 柔和展示 | [→](#blueberry-contrast) |
-| 22 | orange-flat-shadow | 浅色,橙色,扁平,现代 | 现代扁平 | [→](#orange-flat-shadow) |
-| 23 | neon | 霓虹,紫色,夜店,科幻 | 夜店/科幻 | [→](#neon) |
-| 24 | cyberpunk | 赛博朋克,霓虹,科幻,未来 | 赛博朋克 | [→](#cyberpunk) |
-| 25 | neon-downtown-lights | 霓虹,城市,夜晚,炫彩 | 城市夜景 | [→](#neon-downtown-lights) |
-| 26 | dance-network | 霓虹,粉色,青色,活力 | 活力展示 | [→](#dance-network) |
-| 27 | summer-meadow | 自然,夏季,草地,绿色 | 自然/夏季 | [→](#summer-meadow) |
-| 28 | rustic-mountain-cabin | 自然,山林,木屋,棕色 | 自然/山野 | [→](#rustic-mountain-cabin) |
-| 29 | ocean-sunset | 自然,海洋,日落,温暖 | 日落/海洋 | [→](#ocean-sunset) |
-| 30 | deserted-island | 自然,岛屿,沙滩,热带 | 热带/旅游 | [→](#deserted-island) |
-| 31 | dull-green-forest | 自然,森林,绿色,沉稳 | 森林/沉稳 | [→](#dull-green-forest) |
-| 32 | deep-green | 自然,深绿,森林,活力 | 环保/活力 | [→](#deep-green) |
-| 33 | marigold-forest-green | 自然,金盏花,森林绿,秋季 | 秋季/自然 | [→](#marigold-forest-green) |
-| 34 | halloween-warm | 季节,万圣节,温暖,橙色 | 万圣节 | [→](#halloween-warm) |
-| 35 | spring | 季节,春季,清新,柔和 | 春季/清新 | [→](#spring) |
-| 36 | autumn | 季节,秋季,落叶,温暖 | 秋季/温暖 | [→](#autumn) |
-| 37 | gold-and-silver | 金属,金色,银色,奢华 | 奢侈品 | [→](#gold-and-silver) |
-| 38 | mahogany-and-gold | 金属,桃花心木,金色,高端 | 高端产品 | [→](#mahogany-and-gold) |
-| 39 | vermilion-and-gold | 金属,朱红,金色,中国风 | 中国风 | [→](#vermilion-and-gold) |
-| 40 | react | 品牌,React,科技,前端 | 前端/技术 | [→](#react) |
-| 41 | facebook | 品牌,社交媒体,蓝色 | 社交媒体 | [→](#facebook) |
-| 42 | tiktok | 品牌,社交媒体,红色 | 社交媒体 | [→](#tiktok) |
-| 43 | fc-barcelona | 品牌,足球,体育 | 体育/运动 | [→](#fc-barcelona) |
-| 44 | almonds | 食物,杏仁,棕色,自然 | 食品/自然 | [→](#almonds) |
-| 45 | tomatoes-cucumbers | 食物,番茄,黄瓜,新鲜 | 食品/新鲜 | [→](#tomatoes-cucumbers) |
-| 46 | ruby | 食物,红宝石,红色,热情 | 热情展示 | [→](#ruby) |
-| 47 | chocolate-mint | 食物,巧克力,薄荷,清新 | 食品/清新 | [→](#chocolate-mint) |
-| 48 | caramel-sage-green | 食物,焦糖,鼠尾草,温暖 | 温暖/自然 | [→](#caramel-sage-green) |
-| 49 | dull-peach | 食物,桃子,柔和,温暖 | 柔和温暖 | [→](#dull-peach) |
-| 50 | sunny-day | 天气,阳光,明亮,温暖 | 阳光/明亮 | [→](#sunny-day) |
-| 51 | rainy-morning | 天气,雨天,清晨,宁静 | 宁静/平和 | [→](#rainy-morning) |
-| 52 | vintage-cyan-coral | 复古,青色,珊瑚,怀旧 | 复古风格 | [→](#vintage-cyan-coral) |
-| 53 | vintage-jewelry-shop | 复古,珠宝店,优雅,中性色 | 优雅复古 | [→](#vintage-jewelry-shop) |
-| 54 | pantone-2023 | 潮流,2023,粉色,柔和 | 潮流/时尚 | [→](#pantone-2023) |
-| 55 | blush-and-slate | 双色,腮红,石板灰,柔和 | 柔和双色 | [→](#blush-and-slate) |
-| 56 | olive-and-coral | 双色,橄榄绿,珊瑚,自然 | 自然双色 | [→](#olive-and-coral) |
-| 57 | navy-and-blush | 双色,海军蓝,腮红,优雅 | 优雅双色 | [→](#navy-and-blush) |
-| 58 | turquoise-and-rust | 双色,绿松石,铁锈,对比 | 对比双色 | [→](#turquoise-and-rust) |
-| 59 | fuscia-and-turquoise | 双色,紫红,绿松石,活力 | 活力双色 | [→](#fuscia-and-turquoise) |
-| 60 | aubergine-burnt-orange | 双色,茄紫,焦橙,大胆 | 大胆双色 | [→](#aubergine-burnt-orange) |
-| 61 | celadon-and-lilac | 双色,青瓷,丁香,柔和 | 柔和双色 | [→](#celadon-and-lilac) |
-| 62 | periwinkle-and-coral | 双色,长春花,珊瑚,浪漫 | 浪漫双色 | [→](#periwinkle-and-coral) |
-| 63 | jade-and-coral | 双色,翡翠,珊瑚,对比 | 对比双色 | [→](#jade-and-coral) |
-| 64 | tangerine-and-beige | 双色,橘红,米色,温暖 | 温暖双色 | [→](#tangerine-and-beige) |
-| 65 | lavendar | 单色,薰衣草,紫色,浪漫 | 浪漫/柔和 | [→](#lavendar) |
-| 66 | cerulean | 单色,天蓝,明亮,清新 | 清新/明亮 | [→](#cerulean) |
-| 67 | turquoise | 单色,绿松石,清新,自然 | 清新自然 | [→](#turquoise) |
-| 68 | chartreuse | 单色,黄绿,活力,清新 | 活力清新 | [→](#chartreuse) |
-| 69 | gray-blue-modern | 单色,灰蓝,专业,现代 | 专业现代 | [→](#gray-blue-modern) |
-| 70 | deep-purple-gray | 单色,深紫灰,优雅,复古 | 优雅复古 | [→](#deep-purple-gray) |
-| 71 | banking-website | 专业,银行,金融,信任 | 金融/企业 | [→](#banking-website) |
-| 72 | crimson-light-gray | 专业,深红,正式,强调 | 正式/强调 | [→](#crimson-light-gray) |
-| 73 | kelly-green-primary | 专业,绿色,环保,成功 | 环保/成功 | [→](#kelly-green-primary) |
-| 74 | slate-maroon-pink | 专业,灰色,栗色,正式 | 正式场合 | [→](#slate-maroon-pink) |
-| 75 | dull-grays-orange | 专业,灰色,橙色,现代 | 现代专业 | [→](#dull-grays-orange) |
-| 76 | sweden | 地域,瑞典,国旗,北欧 | 北欧风格 | [→](#sweden) |
+| ID | 名称 | 标签 | 推荐场景 | 风格 | 跳转 |
+|----|------|------|----------|------|------|
+| 01 | Dark Sapphire Blue | 深色,蓝色,专业,科技 | 科技产品,暗黑模式 | glass | [→](#dark-sapphire-blue) |
+| 02 | dark-blue-green-red | 深色,多彩,对比强烈 | 视觉冲击 | glass | [→](#dark-blue-green-red) |
+| 03 | dark-blue-red-blush | 深色,蓝色,红色点缀 | 深色科技 | glass | [→](#dark-blue-red-blush) |
+| 04 | Dark Sage Green | 深色,绿色,自然 | 自然/环保 | glass | [→](#dark-sage-green) |
+| 05 | purple-dark-black-blue | 深色,紫色,霓虹 | 赛博朋克 | glass | [→](#purple-dark-black-blue) |
+| 06 | gold-dark | 深色,金色,奢华 | 奢侈品牌 | glass | [→](#gold-dark) |
+| 07 | dark-dull-peach | 深色,桃色,温暖 | 温暖深色 | glass | [→](#dark-dull-peach) |
+| 08 | dark-brick-mustard | 深色,黄色,红色 | 活力深色 | glass | [→](#dark-brick-mustard) |
+| 09 | dark-chartreuse | 深色,黄绿色,自然 | 自然科技 | glass | [→](#dark-chartreuse) |
+| 10 | dark-lavendar | 深色,紫色,浪漫 | 浪漫深色 | glass | [→](#dark-lavendar) |
+| 11 | moody-intense-red | 深色,红色,强烈,热情 | 热情展示 | glass | [→](#moody-intense-red) |
+| 12 | maroon-dull-browns | 深色,栗色,棕色,复古 | 复古风格 | flat | [→](#maroon-dull-browns) |
+| 13 | space | 深色,太空,星空,金色点缀 | 科幻太空 | glass | [→](#space) |
+| 14 | starry-night | 深色,星空,艺术,梵高风格 | 艺术展示 | glass | [→](#starry-night) |
+| 15 | moon-and-mars | 深色,太空,火星色 | 太空主题 | glass | [→](#moon-and-mars) |
+| 16 | Electric City Nights | 深色,蓝色,城市,科技 | 科技产品 | glass | [→](#electric-city-nights) |
+| 17 | hacker-news | 深色,橙色,科技,极客 | 极客/开发者 | glass | [→](#hacker-news) |
+| 18 | minimal-modern-light | 浅色,极简,蓝色,现代 | 企业官网 | flat | [→](#minimal-modern-light) |
+| 19 | white-with-blue | 浅色,蓝色,清新 | 清新产品 | flat | [→](#white-with-blue) |
+| 20 | black-and-white | 极简,黑白,经典 | 极简设计 | flat | [→](#black-and-white) |
+| 21 | blueberry-contrast | 浅色,柔和,对比 | 柔和展示 | flat | [→](#blueberry-contrast) |
+| 22 | orange-flat-shadow | 浅色,橙色,扁平,现代 | 现代扁平 | flat | [→](#orange-flat-shadow) |
+| 23 | neon | 霓虹,紫色,夜店,科幻 | 夜店/科幻 | glass | [→](#neon) |
+| 24 | cyberpunk | 赛博朋克,霓虹,科幻,未来 | 赛博朋克 | glass | [→](#cyberpunk) |
+| 25 | neon-downtown-lights | 霓虹,城市,夜晚,炫彩 | 城市夜景 | glass | [→](#neon-downtown-lights) |
+| 26 | dance-network | 霓虹,粉色,青色,活力 | 活力展示 | glass | [→](#dance-network) |
+| 27 | summer-meadow | 自然,夏季,草地,绿色 | 自然/夏季 | flat | [→](#summer-meadow) |
+| 28 | rustic-mountain-cabin | 自然,山林,木屋,棕色 | 自然/山野 | flat | [→](#rustic-mountain-cabin) |
+| 29 | ocean-sunset | 自然,海洋,日落,温暖 | 日落/海洋 | flat | [→](#ocean-sunset) |
+| 30 | deserted-island | 自然,岛屿,沙滩,热带 | 热带/旅游 | flat | [→](#deserted-island) |
+| 31 | dull-green-forest | 自然,森林,绿色,沉稳 | 森林/沉稳 | flat | [→](#dull-green-forest) |
+| 32 | deep-green | 自然,深绿,森林,活力 | 环保/活力 | flat | [→](#deep-green) |
+| 33 | marigold-forest-green | 自然,金盏花,森林绿,秋季 | 秋季/自然 | flat | [→](#marigold-forest-green) |
+| 34 | halloween-warm | 季节,万圣节,温暖,橙色 | 万圣节 | flat | [→](#halloween-warm) |
+| 35 | spring | 季节,春季,清新,柔和 | 春季/清新 | flat | [→](#spring) |
+| 36 | autumn | 季节,秋季,落叶,温暖 | 秋季/温暖 | flat | [→](#autumn) |
+| 37 | gold-and-silver | 金属,金色,银色,奢华 | 奢侈品 | glass | [→](#gold-and-silver) |
+| 38 | mahogany-and-gold | 金属,桃花心木,金色,高端 | 高端产品 | glass | [→](#mahogany-and-gold) |
+| 39 | vermilion-and-gold | 金属,朱红,金色,中国风 | 中国风 | flat | [→](#vermilion-and-gold) |
+| 40 | react | 品牌,React,科技,前端 | 前端/技术 | glass | [→](#react) |
+| 41 | facebook | 品牌,社交媒体,蓝色 | 社交媒体 | flat | [→](#facebook) |
+| 42 | tiktok | 品牌,社交媒体,红色 | 社交媒体 | glass | [→](#tiktok) |
+| 43 | fc-barcelona | 品牌,足球,体育 | 体育/运动 | flat | [→](#fc-barcelona) |
+| 44 | almonds | 食物,杏仁,棕色,自然 | 食品/自然 | flat | [→](#almonds) |
+| 45 | tomatoes-cucumbers | 食物,番茄,黄瓜,新鲜 | 食品/新鲜 | flat | [→](#tomatoes-cucumbers) |
+| 46 | ruby | 食物,红宝石,红色,热情 | 热情展示 | glass | [→](#ruby) |
+| 47 | chocolate-mint | 食物,巧克力,薄荷,清新 | 食品/清新 | flat | [→](#chocolate-mint) |
+| 48 | caramel-sage-green | 食物,焦糖,鼠尾草,温暖 | 温暖/自然 | flat | [→](#caramel-sage-green) |
+| 49 | dull-peach | 食物,桃子,柔和,温暖 | 柔和温暖 | flat | [→](#dull-peach) |
+| 50 | sunny-day | 天气,阳光,明亮,温暖 | 阳光/明亮 | flat | [→](#sunny-day) |
+| 51 | rainy-morning | 天气,雨天,清晨,宁静 | 宁静/平和 | flat | [→](#rainy-morning) |
+| 52 | vintage-cyan-coral | 复古,青色,珊瑚,怀旧 | 复古风格 | flat | [→](#vintage-cyan-coral) |
+| 53 | vintage-jewelry-shop | 复古,珠宝店,优雅,中性色 | 优雅复古 | flat | [→](#vintage-jewelry-shop) |
+| 54 | pantone-2023 | 潮流,2023,粉色,柔和 | 潮流/时尚 | flat | [→](#pantone-2023) |
+| 55 | blush-and-slate | 双色,腮红,石板灰,柔和 | 柔和双色 | flat | [→](#blush-and-slate) |
+| 56 | olive-and-coral | 双色,橄榄绿,珊瑚,自然 | 自然双色 | flat | [→](#olive-and-coral) |
+| 57 | navy-and-blush | 双色,海军蓝,腮红,优雅 | 优雅双色 | flat | [→](#navy-and-blush) |
+| 58 | turquoise-and-rust | 双色,绿松石,铁锈,对比 | 对比双色 | flat | [→](#turquoise-and-rust) |
+| 59 | fuscia-and-turquoise | 双色,紫红,绿松石,活力 | 活力双色 | glass | [→](#fuscia-and-turquoise) |
+| 60 | aubergine-burnt-orange | 双色,茄紫,焦橙,大胆 | 大胆双色 | flat | [→](#aubergine-burnt-orange) |
+| 61 | celadon-and-lilac | 双色,青瓷,丁香,柔和 | 柔和双色 | flat | [→](#celadon-and-lilac) |
+| 62 | periwinkle-and-coral | 双色,长春花,珊瑚,浪漫 | 浪漫双色 | flat | [→](#periwinkle-and-coral) |
+| 63 | jade-and-coral | 双色,翡翠,珊瑚,对比 | 对比双色 | flat | [→](#jade-and-coral) |
+| 64 | tangerine-and-beige | 双色,橘红,米色,温暖 | 温暖双色 | flat | [→](#tangerine-and-beige) |
+| 65 | lavendar | 单色,薰衣草,紫色,浪漫 | 浪漫/柔和 | flat | [→](#lavendar) |
+| 66 | cerulean | 单色,天蓝,明亮,清新 | 清新/明亮 | flat | [→](#cerulean) |
+| 67 | turquoise | 单色,绿松石,清新,自然 | 清新自然 | flat | [→](#turquoise) |
+| 68 | chartreuse | 单色,黄绿,活力,清新 | 活力清新 | flat | [→](#chartreuse) |
+| 69 | gray-blue-modern | 单色,灰蓝,专业,现代 | 专业现代 | flat | [→](#gray-blue-modern) |
+| 70 | deep-purple-gray | 单色,深紫灰,优雅,复古 | 优雅复古 | flat | [→](#deep-purple-gray) |
+| 71 | banking-website | 专业,银行,金融,信任 | 金融/企业 | flat | [→](#banking-website) |
+| 72 | crimson-light-gray | 专业,深红,正式,强调 | 正式/强调 | flat | [→](#crimson-light-gray) |
+| 73 | kelly-green-primary | 专业,绿色,环保,成功 | 环保/成功 | flat | [→](#kelly-green-primary) |
+| 74 | slate-maroon-pink | 专业,灰色,栗色,正式 | 正式场合 | flat | [→](#slate-maroon-pink) |
+| 75 | dull-grays-orange | 专业,灰色,橙色,现代 | 现代专业 | flat | [→](#dull-grays-orange) |
+| 76 | sweden | 地域,瑞典,国旗,北欧 | 北欧风格 | flat | [→](#sweden) |
 
 ---
 
@@ -118,8 +118,17 @@
 ### 检索流程
 1. 解析用户需求关键词（如"科技感"、"活力"、"专业"）
 2. 在索引表的"标签"列匹配关键词
-3. 通过锚点跳转读取完整配色
-4. 根据5色值智能推导完整10色
+3. 读取"风格"列确定视觉风格（glass/flat）
+4. 通过锚点跳转读取完整配色
+5. 根据5色值智能推导完整10色
+
+### 风格说明
+每个配色主题有默认视觉风格，用户可覆盖：
+
+| 风格 | 说明 | 视觉特征 |
+|------|------|----------|
+| glass | 玻璃态 | `bg-white/10 backdrop-blur-md border-white/20`，适合科技/产品演示 |
+| flat | 扁平极简 | `bg-white shadow-sm border-gray-200`，适合数据报告/正式场合 |
 
 ### 色值映射规则
 每个配色提供5个核心色值，映射如下：
