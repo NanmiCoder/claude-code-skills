@@ -1,13 +1,13 @@
 # Claude Code Skills
 
-Claude Code skills collection by nanmi.
+Claude Code skills collection by [程序员阿江-Relakkes](https://space.bilibili.com/434377496).
 
 ## 安装
 
 ### 1. 添加 Marketplace
 
 ```bash
-/plugin marketplace add nanmi/claude-code-skills
+/plugin marketplace add NanmiCoder/claude-code-skills
 ```
 
 ### 2. 安装 Plugin
