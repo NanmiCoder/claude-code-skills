@@ -49,7 +49,7 @@ description: 自动生成技术演示幻灯片项目。用于创建 LLM 模型�
 
 ```bash
 # 1. 复制模板项目
-cp -r ~/.claude/plugins/slides-generator/template <项目名称>
+cp -r ~/.claude/plugins/slides-generator/templates/slides-template <项目名称>
 cd <项目名称>
 
 # 2. 应用主题（修改 tailwind.config.js）
@@ -166,10 +166,10 @@ npm install && npm run dev
 
 ## 项目结构说明
 
-模板项目位于 `~/.claude/plugins/slides-generator/template/`：
+模板项目位于 `~/.claude/plugins/slides-generator/templates/slides-template/`：
 
 ```
-template/
+slides-template/
 ├── src/
 │   ├── data/
 │   │   ├── slidesData.js    # 所有内容数据（需要生成）
