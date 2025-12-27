@@ -28,3 +28,6 @@ npm-debug.log*
 # Cache
 .cache/
 .parcel-cache/
+
+# Local plans (not tracked)
+docs/plans/
