@@ -93,6 +93,7 @@ claude mcp add chrome-devtools -- npx chrome-devtools-mcp@latest
 
 **主题**：模型工程能力评测
 **配色**：blue-professional（深蓝专业 #2563eb）
+**输出目录**：./model-benchmark（回复路径可修改）
 
 **页面结构**：
 1. 首页 - 模型工程能力评测
@@ -104,6 +105,10 @@ claude mcp add chrome-devtools -- npx chrome-devtools-mcp@latest
 
 **确认开始生成吗？**
 ```
+
+**用户响应处理**：
+- 回复"确认"/"OK"/"好" → 使用默认路径 `./项目名称`
+- 回复路径（如 `/home/demos` 或 `~/projects`）→ 使用 `用户路径/项目名称`
 
 用户确认后才进入生成阶段。如用户要修改，根据反馈调整后重新确认。
 
@@ -138,12 +143,25 @@ claude mcp add chrome-devtools -- npx chrome-devtools-mcp@latest
 
 ### Step 6: 项目生成
 
+**路径处理规则**：
+
+| 用户输入 | 项目名称 | 最终输出目录 |
+|---------|---------|-------------|
+| （默认） | model-benchmark | `./model-benchmark` |
+| `/home/demos` | model-benchmark | `/home/demos/model-benchmark` |
+| `~/projects` | model-benchmark | `~/projects/model-benchmark` |
+| `../other-folder` | model-benchmark | `../other-folder/model-benchmark` |
+
+**边界处理**：
+- 目标目录已存在 → 提示用户并询问是否覆盖
+- 父目录不存在 → 自动创建（`mkdir -p`）
+
 执行以下命令生成项目：
 
 ```bash
 # 1. 复制模板项目（从 skill 的 assets/template 目录）
-cp -r <skill-path>/assets/template <项目名称>
-cd <项目名称>
+cp -r <skill-path>/assets/template <输出目录>
+cd <输出目录>
 
 # 2. 应用主题（修改 tailwind.config.js）
 # 使用 themes/index.js 中的 generateTailwindConfig 函数
@@ -307,6 +325,7 @@ Claude: "信息收集完成！以下是 PPT 大纲：
 
   ## 模型工程能力评测
   **主题**：blue-professional（深蓝专业 #2563eb）
+  **输出目录**：./model-benchmark（回复路径可修改）
 
   **页面结构**：
   1. 首页 - 模型工程能力评测
@@ -318,7 +337,7 @@ Claude: "信息收集完成！以下是 PPT 大纲：
 
   确认开始生成吗？"
 
-用户: "确认"
+用户: "确认"  # 或回复路径如 "~/demos" 则使用 ~/demos/model-benchmark
 
 Claude: [检查 chrome-devtools MCP，如未安装则自动安装]
 Claude: [复制模板、写入数据、启动项目]
@@ -362,6 +381,7 @@ Claude: "信息收集完成！以下是 PPT 大纲：
 
   ## SmartBot - AI驱动的智能客服
   **主题**：tech-blue（天蓝 #0ea5e9）
+  **输出目录**：./smartbot-demo（回复路径可修改）
 
   **页面结构**：
   1. 首页 - SmartBot 产品介绍
@@ -373,7 +393,7 @@ Claude: "信息收集完成！以下是 PPT 大纲：
 
   确认开始生成吗？"
 
-用户: "确认"
+用户: "确认"  # 或回复路径如 "~/demos" 则使用 ~/demos/smartbot-demo
 
 Claude: [检查 chrome-devtools MCP，如未安装则自动安装]
 Claude: [复制模板、写入数据、启动项目]
