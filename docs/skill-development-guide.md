@@ -320,6 +320,10 @@ my-skill/
 
 ## 参考资源
 
+**项目内文档：**
+- [本地开发调试指南](local-development-guide.md) - 本地测试、调试技巧、问题排查
+
+**官方文档：**
 - [Claude Code Skills 官方文档](https://code.claude.com/docs/en/skills)
 - [Claude Code Plugins 官方文档](https://code.claude.com/docs/en/plugins)
 - [anthropics/skills 仓库](https://github.com/anthropics/skills)

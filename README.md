@@ -122,12 +122,10 @@ Claude 会通过交互式问答：
 
 ## 开发新 Skill
 
-想要贡献新的 Skill？请参阅 [Skill 开发指南](docs/skill-development-guide.md)，包含：
+想要贡献新的 Skill？请参阅以下文档：
 
-- 目录结构规范
-- SKILL.md 编写指南
-- 最佳实践
-- 完整 Checklist
+- [Skill 开发指南](docs/skill-development-guide.md) - 目录结构、SKILL.md 编写、最佳实践
+- [本地开发调试指南](docs/local-development-guide.md) - 本地测试、调试技巧、问题排查
 
 ## License
 
