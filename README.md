@@ -10,13 +10,7 @@ Claude Code skills created by [程序员阿江-Relakkes](https://space.bilibili.
 /plugin marketplace add NanmiCoder/claude-code-skills
 ```
 
-### 2. 安装 Plugin
-
-```bash
-/plugin install slides-generator@claude-code-skills
-```
-
-### 3. 启用 Plugin
+### 2. 启用 Plugin
 
 安装后插件默认为禁用状态，需要手动启用：
 
@@ -26,7 +20,7 @@ Claude Code skills created by [程序员阿江-Relakkes](https://space.bilibili.
 
 或在 `/plugin` 界面的 Installed 标签页中选择 "Enable plugin"。
 
-### 4. 重启 Claude Code（可选）
+### 3. 重启 Claude Code（可选）
 
 如果启用后仍无法使用，尝试重启 Claude Code。
 
@@ -89,7 +83,7 @@ slides-generator 支持 4 种交互模式，根据你的素材来源选择最适
 <summary><b>模式 1：在线站点素材</b> - 从 URL 获取内容</summary>
 
 ```
-用户: 使用 slides-generator 帮我做一个 PPT，素材来源于 https://example.com/article
+用户: 使用 slides-generator 帮我做一个 PPT，素材来源于 https://codingagent-benchmark.vercel.app
 
 Claude: [访问 URL 获取内容]
 Claude: [分析内容结构，提取关键信息]
