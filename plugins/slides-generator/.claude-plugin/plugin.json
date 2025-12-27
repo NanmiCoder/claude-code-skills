@@ -3,7 +3,7 @@
   "description": "自动生成技术演示幻灯片项目。用于创建 LLM 模型评测、技术产品演示、技术报告等场景的交互式幻灯片。",
   "version": "1.0.0",
   "author": {
-    "name": "nanmi"
+    "name": "NanmiCoder"
   },
   "repository": "https://github.com/nanmi/claude-code-skills",
   "license": "Apache-2.0"
