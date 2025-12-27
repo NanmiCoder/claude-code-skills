@@ -5,10 +5,10 @@
  */
 
 export const THEMES = {
-  // 红色活力主题
-  'red-vibrant': {
-    name: "红色活力",
-    tags: ["红色", "活力", "对比"],
+  // 红青对比主题
+  'red-cyan-contrast': {
+    name: "红青对比",
+    tags: ["红色", "青色", "对比", "现代", "活力"],
     colors: {
       'primary-100': '#de283b',
       'primary-200': '#ff6366',
@@ -59,21 +59,39 @@ export const THEMES = {
     }
   },
 
-  // 绿色自然主题
-  'green-nature': {
-    name: "绿色自然",
-    tags: ["绿色", "自然", "环保"],
+  // 奶油暖色主题
+  'warm-cream': {
+    name: "奶油暖色",
+    tags: ["橙色", "温暖", "复古", "奶油", "品牌"],
     colors: {
-      'primary-100': '#10a37f',
-      'primary-200': '#34d399',
-      'primary-300': '#d1fae5',
-      'accent-100': '#1d4ed8',
-      'accent-200': '#1e3a8a',
-      'text-100': '#111827',
-      'text-200': '#4b5563',
-      'bg-100': '#ffffff',
-      'bg-200': '#f9fafb',
-      'bg-300': '#d1d5db',
+      'primary-100': '#FF7F50',
+      'primary-200': '#dd6236',
+      'primary-300': '#8f1e00',
+      'accent-100': '#8B4513',
+      'accent-200': '#ffd299',
+      'text-100': '#000000',
+      'text-200': '#2c2c2c',
+      'bg-100': '#F7EEDD',
+      'bg-200': '#ede4d3',
+      'bg-300': '#c4bcab',
+    }
+  },
+
+  // 深色森林绿主题
+  'dark-sage-green': {
+    name: "深色森林绿",
+    tags: ["深色", "绿色", "自然", "森林", "科技"],
+    colors: {
+      'primary-100': '#2E8B57',
+      'primary-200': '#61bc84',
+      'primary-300': '#c6ffe6',
+      'accent-100': '#8FBC8F',
+      'accent-200': '#345e37',
+      'text-100': '#FFFFFF',
+      'text-200': '#e0e0e0',
+      'bg-100': '#1E1E1E',
+      'bg-200': '#2d2d2d',
+      'bg-300': '#454545',
     }
   },
 

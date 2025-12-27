@@ -1,6 +1,6 @@
 # Claude Code Skills
 
-Claude Code skills collection by [程序员阿江-Relakkes](https://space.bilibili.com/434377496).
+Claude Code skills created by [程序员阿江-Relakkes](https://space.bilibili.com/434377496).
 
 ## 安装
 
@@ -71,17 +71,79 @@ claude-code-skills/
 
 | 风格 | 主题ID | 主色 |
 |------|--------|------|
+| 红青对比 | red-cyan-contrast | #de283b |
+| 奶油暖色 | warm-cream | #FF7F50 |
+| 深色森林绿 | dark-sage-green | #2E8B57 |
 | 科技蓝 | tech-blue | #0ea5e9 |
 | 深蓝专业 | blue-professional | #2563eb |
-| 红色活力 | red-vibrant | #de283b |
-| 绿色自然 | green-nature | #10a37f |
-| 紫色优雅 | purple-elegant | #7c3aed |
 | 赛博朋克 | cyberpunk | #0f0f0f |
 | 金色奢华 | gold-luxury | #1e1e1e |
 | 中国朱红 | vermilion-chinese | #efd8bb |
 | ... | 更多主题见 references/palettes.md | ... |
 
-**使用示例**:
+**交互模式**:
+
+slides-generator 支持 4 种交互模式，根据你的素材来源选择最适合的方式：
+
+<details>
+<summary><b>模式 1：在线站点素材</b> - 从 URL 获取内容</summary>
+
+```
+用户: 使用 slides-generator 帮我做一个 PPT，素材来源于 https://example.com/article
+
+Claude: [访问 URL 获取内容]
+Claude: [分析内容结构，提取关键信息]
+Claude: [展示大纲] "确认开始生成吗？"
+```
+
+**适用场景**：
+- 技术博客文章转 PPT
+- 产品官网内容提取
+- 在线文档转演示
+
+</details>
+
+<details>
+<summary><b>模式 2：本地文档素材</b> - 从 .md 文件生成</summary>
+
+```
+用户: 使用 slides-generator 帮我做一个 PPT，素材来源于 ./docs/report.md
+
+Claude: [读取本地 Markdown 文件]
+Claude: [解析文档结构]
+Claude: [展示大纲] "确认开始生成吗？"
+```
+
+**适用场景**：
+- 技术文档转演示
+- 周报/月报可视化
+- 项目 README 转 PPT
+
+</details>
+
+<details>
+<summary><b>模式 3：直接内容素材</b> - 直接提供内容</summary>
+
+```
+用户: 使用 slides-generator 帮我做一个 PPT，内容如下：
+  标题：AI 产品介绍
+  功能1：智能对话
+  功能2：代码生成
+  功能3：图像理解
+
+Claude: [解析用户提供的内容]
+Claude: [展示大纲] "确认开始生成吗？"
+```
+
+**适用场景**：
+- 快速创建简单演示
+- 已有结构化内容
+- 临时演示需求
+
+</details>
+
+<details>
+<summary><b>模式 4：交互式聊天构建</b> - 问答式收集（推荐）</summary>
 
 ```
 用户: 帮我做一个模型工程能力评测
@@ -98,14 +160,17 @@ Claude: "推荐 blue-professional 主题，有几个评测任务？"
 ... 继续交互式收集信息 ...
 
 Claude: [展示大纲] "确认开始生成吗？"
-
-用户: "确认"
-
-Claude: [生成项目]
 ```
 
-Claude 会通过交互式问答：
-1. 识别场景类型（LLM 评测）
+**适用场景**：
+- LLM 模型能力评测
+- 技术产品功能演示
+- 需要详细定制的演示
+
+</details>
+
+**生成流程**：
+1. 识别场景类型（评测/演示/报告）
 2. 收集必要信息（对比模型、任务详情等）
 3. 展示 PPT 大纲让用户确认
 4. 确认后生成完整的 Vite + React + Tailwind 项目

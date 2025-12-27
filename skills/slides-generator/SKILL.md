@@ -120,16 +120,16 @@ claude mcp add chrome-devtools -- npx chrome-devtools-mcp@latest
 
 | 主题ID | 名称 | 标签 | 主色 |
 |--------|------|------|------|
+| red-cyan-contrast | 红青对比 | 红色,青色,对比,现代 | #de283b |
+| warm-cream | 奶油暖色 | 橙色,温暖,复古,品牌 | #FF7F50 |
+| dark-sage-green | 深色森林绿 | 深色,绿色,自然,森林 | #2E8B57 |
+| dark-sapphire | 深蓝宝石 | 深色,蓝色,专业,科技 | #0f1c2e |
 | tech-blue | 科技蓝 | 蓝色,科技,现代 | #0ea5e9 |
 | blue-professional | 深蓝专业 | 蓝色,专业,商务 | #2563eb |
-| red-vibrant | 红色活力 | 红色,活力,对比 | #de283b |
-| green-nature | 绿色自然 | 绿色,自然,环保 | #10a37f |
-| purple-elegant | 紫色优雅 | 紫色,浪漫,优雅 | #7c3aed |
-| orange-warm | 橙色温暖 | 橙色,温暖,活力 | #d97706 |
-| neutral-gray | 中性灰 | 灰色,中性,对比 | #6b7280 |
-| dark-sapphire | 深蓝宝石 | 深色,蓝色,专业 | #0f1c2e |
 | cyberpunk | 赛博朋克 | 霓虹,科幻,未来 | #0f0f0f |
 | gold-luxury | 金色奢华 | 金色,奢华,高端 | #1e1e1e |
+| vermilion-chinese | 中国朱红 | 中国风,朱红,金色 | #efd8bb |
+| neutral-gray | 中性灰 | 灰色,中性,对比 | #6b7280 |
 
 **主题选择流程**：
 1. 询问用户风格偏好（"您想要什么风格？科技感/专业/活力/自然..."）
