@@ -1,6 +1,41 @@
 # Skill 开发指南
 
-本文档总结了在 `claude-code-skills` 项目中创建新 Skill 的标准流程和最佳实践。
+本文档总结了创建 Claude Code Skill 的标准流程和最佳实践。
+
+## Skills 存放位置
+
+根据官方文档，Skills 可以放在以下位置：
+
+| 位置 | 路径 | 适用范围 | 说明 |
+|------|------|----------|------|
+| 企业级 | 由管理员配置 | 组织内所有用户 | 需要企业版 |
+| 个人 | `~/.claude/skills/<skill-name>/` | 你的所有项目 | 最简单的方式 |
+| 项目 | `.claude/skills/<skill-name>/` | 当前项目所有协作者 | 可提交到 Git |
+| 插件 | 插件目录内 `skills/<skill-name>/` | 安装该插件的用户 | 通过 Marketplace 分发 |
+
+**优先级（高到低）：** 企业级 > 个人 > 项目 > 插件
+
+### 快速开始：创建个人 Skill
+
+```bash
+# 1. 创建目录
+mkdir -p ~/.claude/skills/my-skill
+
+# 2. 创建 SKILL.md（注意：frontmatter 必须从第一行开始！）
+cat > ~/.claude/skills/my-skill/SKILL.md << 'EOF'
+---
+name: my-skill
+description: 我的自定义 Skill。当用户提到"xxx"时使用。
+---
+
+# My Skill
+
+这里是 Skill 的指令内容...
+EOF
+
+# 3. 重启 Claude Code 使其生效（没有热重载！）
+claude
+```
 
 ## 目录结构规范
 
@@ -326,5 +361,6 @@ my-skill/
 **官方文档：**
 - [Claude Code Skills 官方文档](https://code.claude.com/docs/en/skills)
 - [Claude Code Plugins 官方文档](https://code.claude.com/docs/en/plugins)
-- [anthropics/skills 仓库](https://github.com/anthropics/skills)
-- [Skill 最佳实践指南](https://docs.claude.com/en/docs/agents-and-tools/agent-skills/best-practices)
+- [Claude Code Troubleshooting](https://code.claude.com/docs/en/troubleshooting)
+- [Agent Skills Overview](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview)
+- [Skill 最佳实践指南](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices)
