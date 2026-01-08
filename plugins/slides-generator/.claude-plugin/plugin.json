@@ -6,7 +6,6 @@
     "name": "NanmiCoder"
   },
   "keywords": ["slides", "presentation", "PPT", "demo", "benchmark", "React", "Tailwind"],
-  "category": "productivity",
   "homepage": "https://github.com/NanmiCoder/claude-code-skills",
   "license": "Apache-2.0"
 }
