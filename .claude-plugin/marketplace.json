@@ -14,7 +14,8 @@
       "source": "./",
       "strict": false,
       "skills": [
-        "./skills/slides-generator"
+        "./skills/slides-generator",
+        "./skills/langchain-use-skill"
       ]
     }
   ]

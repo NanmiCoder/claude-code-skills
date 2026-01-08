@@ -31,26 +31,36 @@ claude-code-skills/
 ├── .claude-plugin/
 │   └── marketplace.json          # Marketplace 配置
 ├── skills/
-│   └── slides-generator/         # 幻灯片生成器 Skill
+│   ├── slides-generator/         # 幻灯片生成器 Skill
+│   │   ├── SKILL.md              # Skill 定义
+│   │   ├── references/           # 参考文档
+│   │   │   ├── aesthetics.md     # 设计美学指南
+│   │   │   ├── palettes.md       # 76个配色方案
+│   │   │   └── principles.md     # 技术设计原则
+│   │   └── assets/
+│   │       └── template/         # React 模板项目
+│   │           ├── index.html
+│   │           ├── package.json
+│   │           ├── vite.config.js
+│   │           ├── tailwind.config.js
+│   │           └── src/
+│   │               ├── App.jsx
+│   │               ├── main.jsx
+│   │               ├── index.css
+│   │               └── components/
+│   │                   ├── Background.jsx
+│   │                   ├── Navigation.jsx
+│   │                   └── SlideTransition.jsx
+│   └── langchain-use-skill/      # LangChain 使用指南 Skill
 │       ├── SKILL.md              # Skill 定义
-│       ├── references/           # 参考文档
-│       │   ├── aesthetics.md     # 设计美学指南
-│       │   ├── palettes.md       # 76个配色方案
-│       │   └── principles.md     # 技术设计原则
-│       └── assets/
-│           └── template/         # React 模板项目
-│               ├── index.html
-│               ├── package.json
-│               ├── vite.config.js
-│               ├── tailwind.config.js
-│               └── src/
-│                   ├── App.jsx
-│                   ├── main.jsx
-│                   ├── index.css
-│                   └── components/
-│                       ├── Background.jsx
-│                       ├── Navigation.jsx
-│                       └── SlideTransition.jsx
+│       └── references/           # 参考文档
+│           ├── agents/           # Agent 开发
+│           ├── tools/            # Tool 定义
+│           ├── memory/           # 记忆管理
+│           ├── middleware/       # 中间件扩展
+│           ├── advanced/         # 高级主题
+│           ├── integration/      # 集成主题
+│           └── core-concepts/    # 核心概念
 ├── docs/
 │   ├── skill-development-guide.md
 │   └── local-development-guide.md
@@ -181,7 +191,67 @@ Claude: [展示大纲] "确认开始生成吗？"
 4. 确认后生成完整的 Vite + React + Tailwind 项目
 5. 启动开发服务器预览
 
-## 技术栈
+### langchain-use-skill
+
+LangChain 1.0 使用指南。提供 Agent、Tool、Memory、Middleware 等核心概念的快速参考,帮助开发者快速构建 AI Agent 应用。
+
+**触发关键词**: "LangChain"、"创建 Agent"、"AI Agent"、"集成 LangChain"
+
+**支持场景**:
+- 创建 AI Agent 和智能应用
+- LangChain 核心概念快速参考
+- 解决 LangChain 相关问题
+- Agent、Tool、Memory、Middleware 开发
+
+**核心功能**:
+
+| 功能 | 说明 |
+|------|------|
+| **Agent 创建** | 快速创建基于 LangGraph 的智能体 |
+| **工具定义** | 使用 @tool 装饰器定义自定义工具 |
+| **记忆管理** | 短期会话记忆 (InMemorySaver) 和长期持久化存储 (PostgresSaver) |
+| **中间件扩展** | @before_model、@after_model、@wrap_tool_call 等钩子 |
+| **结构化输出** | Pydantic/dataclass 输出格式 |
+| **Streaming** | 实时流式更新 |
+| **Runtime Context** | ToolRuntime 访问 state、context、store |
+
+**快速示例**:
+
+```python
+from langchain.agents import create_agent
+from langchain.tools import tool
+
+@tool
+def get_weather(city: str) -> str:
+    """Get weather for a given city."""
+    return f"It's sunny in {city}!"
+
+agent = create_agent(
+    model="claude-sonnet-4-5-20250929",
+    tools=[get_weather],
+    system_prompt="You are a helpful assistant",
+)
+
+result = agent.invoke(
+    {"messages": [{"role": "user", "content": "what is the weather in sf"}]}
+)
+```
+
+**技术栈**:
+- Python 3.10+
+- LangChain 1.0
+- LangGraph
+- Anthropic Claude / OpenAI models
+
+**参考文档**:
+- `references/agents/` - Agent 开发指南
+- `references/tools/` - Tool 定义与使用
+- `references/memory/` - 短期/长期记忆管理
+- `references/middleware/` - 中间件开发
+- `references/advanced/` - 高级特性 (Streaming、Guardrails、MCP)
+- `references/integration/` - 模型集成、消息处理、RAG
+
+## slides-generator 技术栈
 
 生成的幻灯片项目使用：
 - Vite
