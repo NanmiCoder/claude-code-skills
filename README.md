@@ -10,17 +10,34 @@ Claude Code skills created by [程序员阿江-Relakkes](https://space.bilibili.
 /plugin marketplace add NanmiCoder/claude-code-skills
 ```
 
-### 2. 启用 Plugin
+### 2. 安装插件
+
+本 Marketplace 包含多个插件，你可以根据需要选择安装：
+
+```bash
+# 安装 slides-generator 插件
+/plugin install slides-generator@claude-code-skills
+
+# 安装 langchain-use 插件
+/plugin install langchain-use@claude-code-skills
+
+# 或者安装所有插件
+/plugin install slides-generator@claude-code-skills
+/plugin install langchain-use@claude-code-skills
+```
+
+### 3. 启用插件
 
 安装后插件默认为禁用状态，需要手动启用：
 
 ```bash
 /plugin enable slides-generator@claude-code-skills
+/plugin enable langchain-use@claude-code-skills
 ```
 
 或在 `/plugin` 界面的 Installed 标签页中选择 "Enable plugin"。
 
-### 3. 重启 Claude Code（可选）
+### 4. 重启 Claude Code（可选）
 
 如果启用后仍无法使用，尝试重启 Claude Code。
 
@@ -30,37 +47,45 @@ Claude Code skills created by [程序员阿江-Relakkes](https://space.bilibili.
 claude-code-skills/
 ├── .claude-plugin/
 │   └── marketplace.json          # Marketplace 配置
-├── skills/
-│   ├── slides-generator/         # 幻灯片生成器 Skill
-│   │   ├── SKILL.md              # Skill 定义
-│   │   ├── references/           # 参考文档
-│   │   │   ├── aesthetics.md     # 设计美学指南
-│   │   │   ├── palettes.md       # 76个配色方案
-│   │   │   └── principles.md     # 技术设计原则
-│   │   └── assets/
-│   │       └── template/         # React 模板项目
-│   │           ├── index.html
-│   │           ├── package.json
-│   │           ├── vite.config.js
-│   │           ├── tailwind.config.js
-│   │           └── src/
-│   │               ├── App.jsx
-│   │               ├── main.jsx
-│   │               ├── index.css
-│   │               └── components/
-│   │                   ├── Background.jsx
-│   │                   ├── Navigation.jsx
-│   │                   └── SlideTransition.jsx
-│   └── langchain-use-skill/      # LangChain 使用指南 Skill
-│       ├── SKILL.md              # Skill 定义
-│       └── references/           # 参考文档
-│           ├── agents/           # Agent 开发
-│           ├── tools/            # Tool 定义
-│           ├── memory/           # 记忆管理
-│           ├── middleware/       # 中间件扩展
-│           ├── advanced/         # 高级主题
-│           ├── integration/      # 集成主题
-│           └── core-concepts/    # 核心概念
+├── plugins/
+│   ├── slides-generator/         # 幻灯片生成器插件
+│   │   ├── .claude-plugin/
+│   │   │   └── plugin.json       # 插件清单
+│   │   └── skills/
+│   │       └── slides-generator/ # Skill 定义
+│   │           ├── SKILL.md      # Skill 定义文件
+│   │           ├── references/   # 参考文档
+│   │           │   ├── aesthetics.md     # 设计美学指南
+│   │           │   ├── palettes.md       # 76个配色方案
+│   │           │   └── principles.md     # 技术设计原则
+│   │           └── assets/
+│   │               └── template/ # React 模板项目
+│   │                   ├── index.html
+│   │                   ├── package.json
+│   │                   ├── vite.config.js
+│   │                   ├── tailwind.config.js
+│   │                   └── src/
+│   │                       ├── App.jsx
+│   │                       ├── main.jsx
+│   │                       ├── index.css
+│   │                       └── components/
+│   │                           ├── Background.jsx
+│   │                           ├── Navigation.jsx
+│   │                           └── SlideTransition.jsx
+│   └── langchain-use/            # LangChain 使用指南插件
+│       ├── .claude-plugin/
+│       │   └── plugin.json       # 插件清单
+│       └── skills/
+│           └── langchain-use-skill/ # Skill 定义
+│               ├── SKILL.md      # Skill 定义文件
+│               └── references/   # 参考文档
+│                   ├── agents/           # Agent 开发
+│                   ├── tools/            # Tool 定义
+│                   ├── memory/           # 记忆管理
+│                   ├── middleware/       # 中间件扩展
+│                   ├── advanced/         # 高级主题
+│                   ├── integration/      # 集成主题
+│                   └── core-concepts/    # 核心概念
 ├── docs/
 │   ├── skill-development-guide.md
 │   └── local-development-guide.md
@@ -68,9 +93,11 @@ claude-code-skills/
 └── LICENSE
 ```
 
-## 包含的 Skills
+## 包含的插件
 
-### slides-generator
+本 Marketplace 包含以下插件：
+
+### slides-generator 插件
 
 自动生成技术演示幻灯片项目。用于创建 LLM 模型评测、技术产品演示、技术报告等场景的交互式幻灯片。
 
@@ -191,7 +218,7 @@ Claude: [展示大纲] "确认开始生成吗？"
 4. 确认后生成完整的 Vite + React + Tailwind 项目
 5. 启动开发服务器预览
 
-### langchain-use-skill
+### langchain-use 插件
 
 LangChain 1.0 使用指南。提供 Agent、Tool、Memory、Middleware 等核心概念的快速参考,帮助开发者快速构建 AI Agent 应用。
 
@@ -260,12 +287,14 @@ result = agent.invoke(
 - Lucide React Icons
 - JetBrains Mono Font
 
-## 开发新 Skill
+## 开发新插件
 
-想要贡献新的 Skill？请参阅以下文档：
+想要贡献新的插件？请参阅以下文档：
 
 - [Skill 开发指南](docs/skill-development-guide.md) - 目录结构、SKILL.md 编写、最佳实践
 - [本地开发调试指南](docs/local-development-guide.md) - 本地测试、调试技巧、问题排查
+
+或查看 [CLAUDE.md](CLAUDE.md) 了解插件架构和快速开始指南。
 
 ## License
 

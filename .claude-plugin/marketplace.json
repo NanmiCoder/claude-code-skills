@@ -1,22 +1,38 @@
 {
   "name": "claude-code-skills",
   "owner": {
-    "name": "NanmiCoder"
+    "name": "NanmiCoder",
+    "email": "nanmi@example.com"
   },
   "metadata": {
     "description": "Claude Code skills collection by 程序员阿江-Relakkes",
-    "version": "1.0.0"
+    "version": "1.0.0",
+    "pluginRoot": "./plugins"
   },
   "plugins": [
     {
       "name": "slides-generator",
+      "source": "./plugins/slides-generator",
       "description": "自动生成技术演示幻灯片项目。用于创建 LLM 模型评测、技术产品演示、技术报告等场景的交互式幻灯片。",
-      "source": "./",
-      "strict": false,
-      "skills": [
-        "./skills/slides-generator",
-        "./skills/langchain-use-skill"
-      ]
+      "version": "1.0.0",
+      "author": {
+        "name": "NanmiCoder"
+      },
+      "keywords": ["slides", "presentation", "PPT", "demo", "benchmark", "React", "Tailwind"],
+      "category": "productivity",
+      "license": "Apache-2.0"
+    },
+    {
+      "name": "langchain-use",
+      "source": "./plugins/langchain-use",
+      "description": "LangChain 1.0 使用指南。提供 Agent、Tool、Memory、Middleware 等核心概念的快速参考。",
+      "version": "1.0.0",
+      "author": {
+        "name": "NanmiCoder"
+      },
+      "keywords": ["langchain", "agent", "llm", "ai", "python", "framework"],
+      "category": "development",
+      "license": "Apache-2.0"
     }
   ]
 }
