@@ -21,9 +21,13 @@ Claude Code skills created by [程序员阿江-Relakkes](https://space.bilibili.
 # 安装 langchain-use 插件
 /plugin install langchain-use@claude-code-skills
 
+# 安装 news-extractor 插件
+/plugin install news-extractor@claude-code-skills
+
 # 或者安装所有插件
 /plugin install slides-generator@claude-code-skills
 /plugin install langchain-use@claude-code-skills
+/plugin install news-extractor@claude-code-skills
 ```
 
 ### 3. 启用插件
@@ -33,6 +37,7 @@ Claude Code skills created by [程序员阿江-Relakkes](https://space.bilibili.
 ```bash
 /plugin enable slides-generator@claude-code-skills
 /plugin enable langchain-use@claude-code-skills
+/plugin enable news-extractor@claude-code-skills
 ```
 
 或在 `/plugin` 界面的 Installed 标签页中选择 "Enable plugin"。
@@ -72,20 +77,30 @@ claude-code-skills/
 │   │                           ├── Background.jsx
 │   │                           ├── Navigation.jsx
 │   │                           └── SlideTransition.jsx
-│   └── langchain-use/            # LangChain 使用指南插件
+│   ├── langchain-use/            # LangChain 使用指南插件
+│   │   ├── .claude-plugin/
+│   │   │   └── plugin.json       # 插件清单
+│   │   └── skills/
+│   │       └── langchain-use-skill/ # Skill 定义
+│   │           ├── SKILL.md      # Skill 定义文件
+│   │           └── references/   # 参考文档
+│   │               ├── agents/           # Agent 开发
+│   │               ├── tools/            # Tool 定义
+│   │               ├── memory/           # 记忆管理
+│   │               ├── middleware/       # 中间件扩展
+│   │               ├── advanced/         # 高级主题
+│   │               ├── integration/      # 集成主题
+│   │               └── core-concepts/    # 核心概念
+│   └── news-extractor/       # 新闻提取插件
 │       ├── .claude-plugin/
 │       │   └── plugin.json       # 插件清单
 │       └── skills/
-│           └── langchain-use-skill/ # Skill 定义
+│           └── news-extractor/ # Skill 定义
 │               ├── SKILL.md      # Skill 定义文件
-│               └── references/   # 参考文档
-│                   ├── agents/           # Agent 开发
-│                   ├── tools/            # Tool 定义
-│                   ├── memory/           # 记忆管理
-│                   ├── middleware/       # 中间件扩展
-│                   ├── advanced/         # 高级主题
-│                   ├── integration/      # 集成主题
-│                   └── core-concepts/    # 核心概念
+│               ├── references/   # 参考文档
+│               │   └── platform-patterns.md  # 平台 URL 模式
+│               └── scripts/      # 执行脚本
+│                   └── extract_news.py       # 新闻提取脚本
 ├── docs/
 │   ├── skill-development-guide.md
 │   └── local-development-guide.md
@@ -277,6 +292,67 @@ result = agent.invoke(
 - `references/middleware/` - 中间件开发
 - `references/advanced/` - 高级特性 (Streaming、Guardrails、MCP)
 - `references/integration/` - 模型集成、消息处理、RAG
+
+### news-extractor 插件
+
+新闻站点内容提取。支持微信公众号、今日头条、网易新闻、搜狐新闻、腾讯新闻。
+
+**触发关键词**: "提取新闻"、"抓取公众号"、"爬取新闻"、"新闻JSON"、"新闻Markdown"
+
+**支持平台**:
+
+| 平台 | ID | URL 示例 |
+|------|-----|----------|
+| 微信公众号 | wechat | `https://mp.weixin.qq.com/s/xxxxx` |
+| 今日头条 | toutiao | `https://www.toutiao.com/article/123456/` |
+| 网易新闻 | netease | `https://www.163.com/news/article/ABC123.html` |
+| 搜狐新闻 | sohu | `https://www.sohu.com/a/123456_789` |
+| 腾讯新闻 | tencent | `https://news.qq.com/rain/a/20251016A07W8J00` |
+
+**核心功能**:
+
+| 功能 | 说明 |
+|------|------|
+| **平台自动检测** | 根据 URL 自动识别新闻平台 |
+| **内容提取** | 提取文章标题、作者、发布时间、正文、图片、视频 |
+| **JSON 输出** | 结构化 JSON 格式，便于程序处理 |
+| **Markdown 输出** | 可读性强的 Markdown 格式 |
+
+**使用示例**:
+
+```bash
+# 提取微信公众号文章
+uv run .claude/skills/news-extractor/scripts/extract_news.py \
+  "https://mp.weixin.qq.com/s/ebMzDPu2zMT_mRgYgtL6eQ"
+
+# 仅输出 JSON
+uv run .claude/skills/news-extractor/scripts/extract_news.py "URL" --format json
+
+# 指定输出目录
+uv run .claude/skills/news-extractor/scripts/extract_news.py "URL" --output ./news
+```
+
+**输出格式**:
+
+JSON 结构示例：
+```json
+{
+  "title": "文章标题",
+  "news_url": "原始链接",
+  "news_id": "文章ID",
+  "meta_info": {
+    "author_name": "作者/来源",
+    "publish_time": "2024-01-01 12:00"
+  },
+  "texts": ["段落1", "段落2"],
+  "images": ["图片URL1", "图片URL2"]
+}
+```
+
+**注意事项**:
+- 仅用于教育和研究目的
+- 不要进行大规模爬取
+- 尊重目标网站的 robots.txt 和服务条款
 
 ## slides-generator 技术栈
 

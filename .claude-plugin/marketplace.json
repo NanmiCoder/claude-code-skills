@@ -33,6 +33,18 @@
       "keywords": ["langchain", "agent", "llm", "ai", "python", "framework"],
       "category": "development",
       "license": "Apache-2.0"
+    },
+    {
+      "name": "news-extractor",
+      "source": "./plugins/news-extractor",
+      "description": "新闻站点内容提取。支持微信公众号、今日头条、网易新闻、搜狐新闻、腾讯新闻。",
+      "version": "1.0.0",
+      "author": {
+        "name": "NanmiCoder"
+      },
+      "keywords": ["news", "crawler", "wechat", "toutiao", "netease", "sohu", "tencent", "新闻", "爬虫"],
+      "category": "productivity",
+      "license": "Apache-2.0"
     }
   ]
 }
