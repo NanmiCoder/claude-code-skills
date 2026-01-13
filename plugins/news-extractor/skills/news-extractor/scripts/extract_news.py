@@ -20,22 +20,27 @@ import sys
 from pathlib import Path
 from typing import Optional
 
-# 添加项目根路径（从 scripts 向上 4 层到项目根目录）
-PROJECT_ROOT = Path(__file__).resolve().parents[4]
-sys.path.insert(0, str(PROJECT_ROOT))
+# 添加当前目录到路径
+SCRIPT_DIR = Path(__file__).resolve().parent
+sys.path.insert(0, str(SCRIPT_DIR))
 
-from news_extractor_core.services.extractor import ExtractorService
-from news_extractor_core.services.detector import detect_platform
-from news_extractor_core.services.formatter import to_markdown
+from models import NewsItem
+from detector import detect_platform, get_platform_name, PLATFORM_NAMES
+from formatter import to_markdown
+from crawlers.wechat import WeChatNewsCrawler
+from crawlers.toutiao import ToutiaoNewsCrawler
+from crawlers.netease import NeteaseNewsCrawler
+from crawlers.sohu import SohuNewsCrawler
+from crawlers.tencent import TencentNewsCrawler
 
 
-# 中国新闻平台映射
-CHINA_PLATFORMS = {
-    "wechat": "微信公众号",
-    "toutiao": "今日头条",
-    "netease": "网易新闻",
-    "sohu": "搜狐新闻",
-    "tencent": "腾讯新闻",
+# 爬虫映射
+CRAWLERS = {
+    "wechat": WeChatNewsCrawler,
+    "toutiao": ToutiaoNewsCrawler,
+    "netease": NeteaseNewsCrawler,
+    "sohu": SohuNewsCrawler,
+    "tencent": TencentNewsCrawler,
 }
 
 
@@ -78,25 +83,27 @@ def extract_news(
     if not detected_platform:
         log_error("无法识别该平台，请检查 URL 是否正确")
         log_info("支持的中国新闻平台:")
-        for pid, pname in CHINA_PLATFORMS.items():
+        for pid, pname in PLATFORM_NAMES.items():
             log_info(f"  - {pname} ({pid})")
         return 1
 
-    # 检查是否为中国平台
-    if detected_platform not in CHINA_PLATFORMS:
-        log_error(f"平台 '{detected_platform}' 不是中国新闻平台")
-        log_info("本 Skill 仅支持以下中国新闻平台:")
-        for pid, pname in CHINA_PLATFORMS.items():
+    # 检查是否为支持的平台
+    if detected_platform not in CRAWLERS:
+        log_error(f"平台 '{detected_platform}' 不支持")
+        log_info("支持的中国新闻平台:")
+        for pid, pname in PLATFORM_NAMES.items():
             log_info(f"  - {pname} ({pid})")
         return 1
 
-    platform_name = CHINA_PLATFORMS[detected_platform]
+    platform_name = get_platform_name(detected_platform)
     log_info(f"Platform detected: {detected_platform} ({platform_name})")
 
     # 2. 提取内容
     log_info("Extracting content...")
     try:
-        news_item, _ = ExtractorService.extract_news(url, platform=detected_platform)
+        crawler_class = CRAWLERS[detected_platform]
+        crawler = crawler_class(url, save_path=output_dir)
+        news_item = crawler.run(persist=False)  # 不使用爬虫自带的保存
     except ValueError as e:
         log_error(f"提取失败: {e}")
         return 1
@@ -106,10 +113,10 @@ def extract_news(
 
     # 3. 显示提取结果摘要
     log_info(f"Title: {news_item.title}")
-    if news_item.meta_info.get("author_name"):
-        log_info(f"Author: {news_item.meta_info['author_name']}")
-    if news_item.meta_info.get("publish_time"):
-        log_info(f"Publish time: {news_item.meta_info['publish_time']}")
+    if news_item.meta_info.author_name:
+        log_info(f"Author: {news_item.meta_info.author_name}")
+    if news_item.meta_info.publish_time:
+        log_info(f"Publish time: {news_item.meta_info.publish_time}")
     log_info(f"Text paragraphs: {len(news_item.texts)}")
     log_info(f"Images: {len(news_item.images)}")
     if news_item.videos:
@@ -146,7 +153,7 @@ def list_platforms() -> None:
     """列出支持的平台"""
     print("支持的中国新闻平台:")
     print()
-    for pid, pname in CHINA_PLATFORMS.items():
+    for pid, pname in PLATFORM_NAMES.items():
         print(f"  {pname} ({pid})")
     print()
     print("URL 格式示例:")
@@ -181,7 +188,7 @@ def main():
     )
     parser.add_argument(
         "--platform", "-p",
-        choices=list(CHINA_PLATFORMS.keys()),
+        choices=list(PLATFORM_NAMES.keys()),
         help="指定平台 (可选，默认自动检测)",
     )
     parser.add_argument(

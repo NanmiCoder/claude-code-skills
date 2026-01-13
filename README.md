@@ -100,7 +100,18 @@ claude-code-skills/
 │               ├── references/   # 参考文档
 │               │   └── platform-patterns.md  # 平台 URL 模式
 │               └── scripts/      # 执行脚本
-│                   └── extract_news.py       # 新闻提取脚本
+│                   ├── extract_news.py       # CLI 入口
+│                   ├── models.py             # 数据模型
+│                   ├── detector.py           # 平台检测
+│                   ├── formatter.py          # Markdown 格式化
+│                   └── crawlers/             # 爬虫实现
+│                       ├── base.py           # 爬虫基类
+│                       ├── fetchers.py       # HTTP 获取策略
+│                       ├── wechat.py         # 微信公众号
+│                       ├── toutiao.py        # 今日头条
+│                       ├── netease.py        # 网易新闻
+│                       ├── sohu.py           # 搜狐新闻
+│                       └── tencent.py        # 腾讯新闻
 ├── docs/
 │   ├── skill-development-guide.md
 │   └── local-development-guide.md
