@@ -1,0 +1,8 @@
+{
+  "name": "srt-to-structured-data",
+  "description": "将 SRT 字幕文件转换为结构化 JSON 数据",
+  "version": "1.0.0",
+  "author": {
+    "name": "NanmiCoder"
+  }
+}

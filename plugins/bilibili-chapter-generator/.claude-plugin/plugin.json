@@ -1,0 +1,8 @@
+{
+  "name": "bilibili-chapter-generator",
+  "description": "为 B站视频生成章节列表",
+  "version": "1.0.0",
+  "author": {
+    "name": "NanmiCoder"
+  }
+}

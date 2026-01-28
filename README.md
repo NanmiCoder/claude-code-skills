@@ -16,6 +16,8 @@ Claude Code skills created by [程序员阿江-Relakkes](https://space.bilibili.
 /plugin install slides-generator@claude-code-skills
 /plugin install langchain-use@claude-code-skills
 /plugin install news-extractor@claude-code-skills
+/plugin install srt-to-structured-data@claude-code-skills
+/plugin install bilibili-chapter-generator@claude-code-skills
 ```
 
 ### 3. 启用插件
@@ -24,6 +26,8 @@ Claude Code skills created by [程序员阿江-Relakkes](https://space.bilibili.
 /plugin enable slides-generator@claude-code-skills
 /plugin enable langchain-use@claude-code-skills
 /plugin enable news-extractor@claude-code-skills
+/plugin enable srt-to-structured-data@claude-code-skills
+/plugin enable bilibili-chapter-generator@claude-code-skills
 ```
 
 ## 插件列表
@@ -64,6 +68,26 @@ uv run scripts/extract_news.py "https://mp.weixin.qq.com/s/xxx"
 ```
 
 支持平台：微信公众号、今日头条、网易新闻、搜狐新闻、腾讯新闻
+
+### srt-to-structured-data
+
+SRT 字幕转结构化数据
+
+```bash
+python scripts/parse_srt.py video.srt --stats -o output.json
+```
+
+功能：解析 SRT 字幕文件，输出 JSON 结构化数据，支持统计信息和纯文本输出。
+
+### bilibili-chapter-generator
+
+B站视频章节生成器
+
+```
+帮我把 ./视频字幕.srt 转成B站章节
+```
+
+功能：根据字幕内容自动分析并生成符合 B站格式的章节列表（3-10 个章节）。
 
 ## 文档
 

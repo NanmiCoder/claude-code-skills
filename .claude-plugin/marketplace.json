@@ -45,6 +45,30 @@
       "keywords": ["news", "crawler", "wechat", "toutiao", "netease", "sohu", "tencent", "新闻", "爬虫"],
       "category": "productivity",
       "license": "Apache-2.0"
+    },
+    {
+      "name": "srt-to-structured-data",
+      "source": "./plugins/srt-to-structured-data",
+      "description": "将 SRT 字幕文件转换为结构化 JSON 数据。支持时间码提取、统计信息生成。",
+      "version": "1.0.0",
+      "author": {
+        "name": "NanmiCoder"
+      },
+      "keywords": ["srt", "subtitle", "字幕", "json", "parser", "视频"],
+      "category": "productivity",
+      "license": "Apache-2.0"
+    },
+    {
+      "name": "bilibili-chapter-generator",
+      "source": "./plugins/bilibili-chapter-generator",
+      "description": "为 B站视频生成章节列表。根据字幕内容自动分析并生成符合B站格式的章节。",
+      "version": "1.0.0",
+      "author": {
+        "name": "NanmiCoder"
+      },
+      "keywords": ["bilibili", "B站", "章节", "视频", "字幕", "srt"],
+      "category": "productivity",
+      "license": "Apache-2.0"
     }
   ]
 }
