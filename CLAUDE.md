@@ -53,7 +53,12 @@ plugins/
 - `references/schemas/slidesData.schema.md` - Data structure for slides
 - `references/examples/` - Example output formats
 
-**2. langchain-use** - LangChain 1.0 usage guide
+**2. agent-team-orchestrator** - Agent Teams orchestration engine
+- 5-dimension task analysis (parallelism, communication, context isolation, file conflicts, cost-benefit)
+- Decision matrix for Subagent vs Agent Teams
+- Prompt templates for code review, debugging, cross-layer dev, research
+
+**3. langchain-use** - LangChain 1.0 usage guide
 - Agent, Tool, Memory, Middleware concepts
 - Quick reference for LangChain integration
 - Python-based LLM application development

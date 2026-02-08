@@ -69,6 +69,18 @@
       "keywords": ["bilibili", "B站", "章节", "视频", "字幕", "srt"],
       "category": "productivity",
       "license": "Apache-2.0"
+    },
+    {
+      "name": "agent-team-orchestrator",
+      "source": "./plugins/agent-team-orchestrator",
+      "description": "Agent Teams 智能编排决策引擎。自动分析任务复杂度，判断使用 Subagent 还是 Agent Teams。",
+      "version": "1.0.0",
+      "author": {
+        "name": "NanmiCoder"
+      },
+      "keywords": ["agent", "team", "orchestrator", "parallel", "collaboration", "subagent", "协作", "团队"],
+      "category": "development",
+      "license": "Apache-2.0"
     }
   ]
 }
