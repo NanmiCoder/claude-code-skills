@@ -1,0 +1,11 @@
+{
+  "name": "agent-team-orchestrator",
+  "description": "Agent Teams 智能编排决策引擎。自动分析任务复杂度，判断使用 Subagent 还是 Agent Teams，并提供团队设计指南和 Prompt 模板。",
+  "version": "1.0.0",
+  "author": {
+    "name": "NanmiCoder"
+  },
+  "keywords": ["agent", "team", "orchestrator", "parallel", "collaboration", "subagent"],
+  "homepage": "https://github.com/NanmiCoder/claude-code-skills",
+  "license": "Apache-2.0"
+}

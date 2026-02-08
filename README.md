@@ -18,6 +18,7 @@ Claude Code skills created by [程序员阿江-Relakkes](https://space.bilibili.
 /plugin install news-extractor@claude-code-skills
 /plugin install srt-to-structured-data@claude-code-skills
 /plugin install bilibili-chapter-generator@claude-code-skills
+/plugin install agent-team-orchestrator@claude-code-skills
 ```
 
 ### 3. 启用插件
@@ -28,6 +29,7 @@ Claude Code skills created by [程序员阿江-Relakkes](https://space.bilibili.
 /plugin enable news-extractor@claude-code-skills
 /plugin enable srt-to-structured-data@claude-code-skills
 /plugin enable bilibili-chapter-generator@claude-code-skills
+/plugin enable agent-team-orchestrator@claude-code-skills
 ```
 
 ## 插件列表
@@ -88,6 +90,16 @@ B站视频章节生成器
 ```
 
 功能：根据字幕内容自动分析并生成符合 B站格式的章节列表（3-10 个章节）。
+
+### agent-team-orchestrator
+
+Agent Teams 智能编排决策引擎
+
+```
+帮我用 agent teams 审查这个 PR
+```
+
+功能：自动分析任务复杂度（并行性、通信需求、上下文隔离、文件冲突、成本收益 5 维度），智能决策使用 Subagent 还是 Agent Teams，并提供团队设计指南和 Prompt 模板。
 
 ## 文档
 
