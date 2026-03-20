@@ -34,7 +34,7 @@ __pycache__/
 
 # Lock files
 uv.lock
-bun.lock
+# Note: bun.lock is tracked for plugins that need fast installs in cache
 
 # Claude Code local config
 .claude/
