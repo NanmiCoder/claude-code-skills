@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Navigation from './components/Navigation';
-import Background from './components/Background';
 
 // Slides will be imported here by the main agent
 // Example: import Slide01 from './slides/01-hero';
@@ -40,13 +39,11 @@ export default function App() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [direction, setDirection] = useState(0);
 
-  // Navigate to specific slide
   const goToSlide = useCallback((index) => {
     setDirection(index > currentSlide ? 1 : -1);
     setCurrentSlide(index);
   }, [currentSlide]);
 
-  // Next slide
   const nextSlide = useCallback(() => {
     if (currentSlide < SLIDES.length - 1) {
       setDirection(1);
@@ -54,7 +51,6 @@ export default function App() {
     }
   }, [currentSlide]);
 
-  // Previous slide
   const prevSlide = useCallback(() => {
     if (currentSlide > 0) {
       setDirection(-1);
@@ -62,7 +58,6 @@ export default function App() {
     }
   }, [currentSlide]);
 
-  // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
@@ -78,11 +73,9 @@ export default function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [nextSlide, prevSlide]);
 
-  // Empty state
   if (SLIDES.length === 0) {
     return (
       <div className="h-screen w-screen bg-bg-base flex items-center justify-center relative overflow-hidden">
-        <Background variant="glow" />
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -100,10 +93,6 @@ export default function App() {
 
   return (
     <div className="h-screen w-screen bg-bg-base overflow-hidden relative">
-      {/* Decorative Background */}
-      <Background variant="glow" animate={true} />
-
-      {/* Slide Content */}
       <main className="relative h-full w-full z-10">
         <AnimatePresence initial={false} custom={direction} mode="wait">
           <motion.div
@@ -121,7 +110,6 @@ export default function App() {
         </AnimatePresence>
       </main>
 
-      {/* Navigation */}
       <Navigation
         currentSlide={currentSlide}
         totalSlides={SLIDES.length}

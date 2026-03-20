@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronLeft, ChevronRight, Keyboard } from 'lucide-react';
+import { Menu, X, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function Navigation({
   currentSlide,
@@ -11,7 +11,6 @@ export default function Navigation({
   onGoTo
 }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [showHints, setShowHints] = useState(false);
 
   const progress = ((currentSlide + 1) / totalSlides) * 100;
 
@@ -48,7 +47,6 @@ export default function Navigation({
 
           {/* Progress Indicator */}
           <div className="relative flex items-center gap-3 px-4">
-            {/* Progress Bar Background */}
             <div className="absolute inset-x-0 bottom-0 h-0.5 bg-border-subtle rounded-full overflow-hidden">
               <motion.div
                 className="h-full bg-primary-500"
@@ -57,8 +55,6 @@ export default function Navigation({
                 transition={{ duration: 0.3 }}
               />
             </div>
-
-            {/* Slide Counter */}
             <span className="text-sm font-medium tabular-nums">
               <span className="text-text-primary">{currentSlide + 1}</span>
               <span className="text-text-muted mx-1">/</span>
@@ -76,46 +72,8 @@ export default function Navigation({
           >
             <ChevronRight size={18} />
           </motion.button>
-
-          {/* Keyboard Hints Toggle */}
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => setShowHints(!showHints)}
-            className={`p-3 rounded-xl transition-colors ${
-              showHints ? 'bg-primary-500/20 text-primary-400' : 'hover:bg-bg-elevated/50'
-            }`}
-          >
-            <Keyboard size={18} />
-          </motion.button>
         </div>
       </motion.div>
-
-      {/* Keyboard Hints Tooltip */}
-      <AnimatePresence>
-        {showHints && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 10 }}
-            className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50"
-          >
-            <div className="px-4 py-3 rounded-xl bg-bg-card/90 backdrop-blur-xl border border-border-subtle shadow-xl">
-              <div className="flex items-center gap-6 text-sm">
-                <div className="flex items-center gap-2">
-                  <kbd className="px-2 py-1 rounded bg-bg-elevated text-text-secondary text-xs">←</kbd>
-                  <kbd className="px-2 py-1 rounded bg-bg-elevated text-text-secondary text-xs">→</kbd>
-                  <span className="text-text-muted">Navigate</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <kbd className="px-2 py-1 rounded bg-bg-elevated text-text-secondary text-xs">ESC</kbd>
-                  <span className="text-text-muted">Close menu</span>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* Slide Menu Overlay */}
       <AnimatePresence>

@@ -29,5 +29,20 @@ npm-debug.log*
 .cache/
 .parcel-cache/
 
+# Python
+__pycache__/
+
+# Lock files
+uv.lock
+bun.lock
+
+# Claude Code local config
+.claude/
+.mcp.json
+
+# Temporary & output files
+**/output/
+**/temp/
+
 # Local plans (not tracked)
 docs/plans/

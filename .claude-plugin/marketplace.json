@@ -81,6 +81,18 @@
       "keywords": ["agent", "team", "orchestrator", "parallel", "collaboration", "subagent", "协作", "团队"],
       "category": "development",
       "license": "Apache-2.0"
+    },
+    {
+      "name": "feishu-channel",
+      "source": "./plugins/feishu-channel",
+      "description": "飞书 Channel 插件。通过飞书机器人与 Claude Code 双向通信。",
+      "version": "0.1.0",
+      "author": {
+        "name": "NanmiCoder"
+      },
+      "keywords": ["feishu", "lark", "channel", "mcp", "飞书", "机器人", "bot"],
+      "category": "communication",
+      "license": "Apache-2.0"
     }
   ]
 }
