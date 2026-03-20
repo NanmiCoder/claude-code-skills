@@ -32,6 +32,21 @@ import { homedir } from 'node:os';
 import { randomBytes } from 'node:crypto';
 
 // ---------------------------------------------------------------------------
+// Stderr logger — CRITICAL for MCP stdio transport
+// ---------------------------------------------------------------------------
+// The Lark SDK's default logger writes error/info/debug to stdout via
+// console.log/console.info/console.debug. This corrupts the JSON-RPC
+// protocol over stdio. We redirect ALL SDK logging to stderr.
+
+const stderrLogger = {
+  error: (...msg: any[]) => process.stderr.write(`[feishu:error] ${msg.map(m => typeof m === 'string' ? m : JSON.stringify(m)).join(' ')}\n`),
+  warn:  (...msg: any[]) => process.stderr.write(`[feishu:warn] ${msg.map(m => typeof m === 'string' ? m : JSON.stringify(m)).join(' ')}\n`),
+  info:  (...msg: any[]) => process.stderr.write(`[feishu:info] ${msg.map(m => typeof m === 'string' ? m : JSON.stringify(m)).join(' ')}\n`),
+  debug: (...msg: any[]) => process.stderr.write(`[feishu:debug] ${msg.map(m => typeof m === 'string' ? m : JSON.stringify(m)).join(' ')}\n`),
+  trace: (...msg: any[]) => process.stderr.write(`[feishu:trace] ${msg.map(m => typeof m === 'string' ? m : JSON.stringify(m)).join(' ')}\n`),
+};
+
+// ---------------------------------------------------------------------------
 // Paths
 // ---------------------------------------------------------------------------
 
@@ -94,12 +109,16 @@ function saveAccess(state: AccessState): void {
 // Cache access state in memory, reload on file change
 let cachedAccess: AccessState = loadAccess();
 try {
+  ensureDir(CHANNEL_DIR);
   const { watch } = await import('node:fs');
-  watch(ACCESS_FILE, () => {
-    try { cachedAccess = loadAccess(); } catch { /* ignore */ }
+  // Watch the directory instead of the file — the file may not exist yet
+  watch(CHANNEL_DIR, (_eventType, filename) => {
+    if (filename === 'access.json') {
+      try { cachedAccess = loadAccess(); } catch { /* ignore */ }
+    }
   });
 } catch {
-  // File may not exist yet — will be created on first save
+  // Directory watch failed — access changes require manual reload
 }
 
 function isAllowed(openId: string): boolean {
@@ -279,6 +298,8 @@ function getLarkClient(): Lark.Client {
       appSecret: APP_SECRET,
       appType: Lark.AppType.SelfBuild,
       domain: BRAND_TO_DOMAIN[BRAND] ?? Lark.Domain.Feishu,
+      logger: stderrLogger,
+      loggerLevel: Lark.LoggerLevel.info,
     });
   }
   return larkClient;
@@ -644,17 +665,31 @@ async function startFeishuMonitor(): Promise<void> {
   }
 
   // Set up event dispatcher
+  // Note: encryptKey/verificationToken are NOT needed in WebSocket mode —
+  // WSClient calls invoke() with needCheck:false, bypassing verification.
   const dispatcher = new Lark.EventDispatcher({
     encryptKey: ENCRYPT_KEY,
     verificationToken: VERIFICATION_TOKEN,
+    logger: stderrLogger,
+    loggerLevel: Lark.LoggerLevel.info,
   });
 
   // Handle incoming messages
   dispatcher.register({
     'im.message.receive_v1': async (data: unknown) => {
       try {
-        const event = (data as any).event as FeishuMessageEvent | undefined;
-        if (!event) return;
+        // The Node SDK EventDispatcher may pass the event payload directly
+        // (with sender/message at top level) or wrapped in an .event property.
+        // Handle both cases robustly.
+        const raw = data as any;
+        const event: FeishuMessageEvent | undefined =
+          raw?.message && raw?.sender ? raw :
+          raw?.event?.message && raw?.event?.sender ? raw.event :
+          undefined;
+        if (!event) {
+          console.error('[feishu] Unrecognized event structure:', JSON.stringify(raw).slice(0, 500));
+          return;
+        }
 
         const messageId = event.message.message_id;
         const senderId = event.sender.sender_id.open_id ?? '';
@@ -714,9 +749,11 @@ async function startFeishuMonitor(): Promise<void> {
         const senderName = event.sender.sender_type === 'user' ? senderId : 'app';
 
         // Build timestamp safely
+        // Build timestamp — Feishu v1 events use seconds, v2 uses milliseconds
         let ts: string;
         try {
-          const ms = event.message.create_time ? parseInt(event.message.create_time, 10) : NaN;
+          const raw = event.message.create_time ? parseInt(event.message.create_time, 10) : NaN;
+          const ms = Number.isNaN(raw) ? NaN : (raw < 1e12 ? raw * 1000 : raw);
           ts = Number.isNaN(ms) ? new Date().toISOString() : new Date(ms).toISOString();
         } catch {
           ts = new Date().toISOString();
@@ -748,6 +785,7 @@ async function startFeishuMonitor(): Promise<void> {
     appId: APP_ID,
     appSecret: APP_SECRET,
     domain: BRAND_TO_DOMAIN[BRAND] ?? Lark.Domain.Feishu,
+    logger: stderrLogger,
     loggerLevel: Lark.LoggerLevel.info,
   });
 
@@ -767,7 +805,10 @@ function shutdown(): void {
   console.error('[feishu] Shutting down...');
   if (wsClient) {
     try {
-      wsClient.close({ force: true });
+      // WSClient API varies — try common close methods
+      if (typeof (wsClient as any).close === 'function') {
+        (wsClient as any).close();
+      }
     } catch { /* ignore */ }
   }
   process.exit(0);
