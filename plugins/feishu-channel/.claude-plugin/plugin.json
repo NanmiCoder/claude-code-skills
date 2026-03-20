@@ -1,0 +1,9 @@
+{
+  "name": "feishu-channel",
+  "description": "Feishu (Lark) channel plugin for Claude Code — receive and reply to Feishu messages",
+  "version": "0.1.0",
+  "author": {
+    "name": "nanmi"
+  },
+  "keywords": ["channel", "mcp", "feishu", "lark"]
+}
