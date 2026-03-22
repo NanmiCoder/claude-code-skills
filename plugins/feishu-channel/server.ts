@@ -46,6 +46,18 @@ const stderrLogger = {
   trace: (...msg: any[]) => process.stderr.write(`[feishu:trace] ${msg.map(m => typeof m === 'string' ? m : JSON.stringify(m)).join(' ')}\n`),
 };
 
+function logInfo(message: string): void {
+  process.stderr.write(`[feishu] ${message}\n`);
+}
+
+function logWarn(message: string): void {
+  process.stderr.write(`[feishu:warn] ${message}\n`);
+}
+
+function logError(message: string): void {
+  process.stderr.write(`[feishu:error] ${message}\n`);
+}
+
 // ---------------------------------------------------------------------------
 // Paths
 // ---------------------------------------------------------------------------
@@ -121,13 +133,18 @@ try {
   // Directory watch failed — access changes require manual reload
 }
 
-function isAllowed(openId: string): boolean {
-  if (cachedAccess.policy === 'open') return true;
-  return cachedAccess.allowlist.includes(openId);
-}
-
 function reloadAccess(): void {
   cachedAccess = loadAccess();
+}
+
+function getAccessState(): AccessState {
+  reloadAccess();
+  return cachedAccess;
+}
+
+function isAllowed(openId: string, access: AccessState): boolean {
+  if (access.policy === 'open') return true;
+  return access.allowlist.includes(openId);
 }
 
 // ---------------------------------------------------------------------------
@@ -252,6 +269,12 @@ function parseMessageContent(content: string, messageType: string): string {
     default:
       return `[${messageType} message]`;
   }
+}
+
+function clipForLog(text: string, max = 160): string {
+  const normalized = text.replace(/\s+/g, ' ').trim();
+  if (normalized.length <= max) return normalized;
+  return `${normalized.slice(0, max - 1)}…`;
 }
 
 /**
@@ -638,9 +661,7 @@ let wsClient: Lark.WSClient | null = null;
 
 async function startFeishuMonitor(): Promise<void> {
   if (!APP_ID || !APP_SECRET) {
-    console.error(
-      '[feishu] Credentials not configured. Run /feishu:configure <app_id> <app_secret> in Claude Code.',
-    );
+    logError('Credentials not configured. Run /feishu:configure <app_id> <app_secret> in Claude Code.');
     return;
   }
 
@@ -656,12 +677,12 @@ async function startFeishuMonitor(): Promise<void> {
     if (res.code === 0) {
       const bot = res.bot || res.data?.bot;
       botOpenId = bot?.open_id;
-      console.error(`[feishu] Bot connected: ${bot?.bot_name ?? 'unknown'} (${botOpenId})`);
+      logInfo(`Bot connected: ${bot?.bot_name ?? 'unknown'} (${botOpenId ?? 'unknown-open-id'})`);
     } else {
-      console.error(`[feishu] Bot probe failed: ${res.msg ?? `code ${res.code}`}`);
+      logWarn(`Bot probe failed: ${res.msg ?? `code ${res.code}`}`);
     }
   } catch (err) {
-    console.error(`[feishu] Bot probe error: ${err instanceof Error ? err.message : String(err)}`);
+    logWarn(`Bot probe error: ${err instanceof Error ? err.message : String(err)}`);
   }
 
   // Set up event dispatcher
@@ -687,7 +708,7 @@ async function startFeishuMonitor(): Promise<void> {
           raw?.event?.message && raw?.event?.sender ? raw.event :
           undefined;
         if (!event) {
-          console.error('[feishu] Unrecognized event structure:', JSON.stringify(raw).slice(0, 500));
+          logWarn(`Unrecognized event structure: ${JSON.stringify(raw).slice(0, 500)}`);
           return;
         }
 
@@ -697,15 +718,22 @@ async function startFeishuMonitor(): Promise<void> {
         const chatType = event.message.chat_type;
 
         // Deduplicate
-        if (isDuplicate(messageId)) return;
+        if (isDuplicate(messageId)) {
+          logInfo(`Skipping duplicate message ${messageId}`);
+          return;
+        }
 
         // Skip messages from bot itself
-        if (botOpenId && senderId === botOpenId) return;
+        if (botOpenId && senderId === botOpenId) {
+          logInfo(`Skipping bot-authored message ${messageId}`);
+          return;
+        }
 
         // Access control
-        if (!isAllowed(senderId)) {
+        const access = getAccessState();
+        if (!isAllowed(senderId, access)) {
           // If pairing policy, check for pairing code
-          if (cachedAccess.policy === 'pairing') {
+          if (access.policy === 'pairing') {
             const content = parseMessageContent(event.message.content, event.message.message_type);
             if (content.toLowerCase().includes('/pair') || content.toLowerCase().includes('pair')) {
               const code = randomBytes(4).toString('hex');
@@ -728,12 +756,12 @@ async function startFeishuMonitor(): Promise<void> {
                   data: { content: replyContent, msg_type: 'post' },
                 });
               } catch (err) {
-                console.error(`[feishu] Failed to send pairing code:`, err instanceof Error ? err.message : err);
+                logError(`Failed to send pairing code: ${err instanceof Error ? err.message : String(err)}`);
               }
               return;
             }
           }
-          console.error(`[feishu] Rejected message from ${senderId} (not in allowlist)`);
+          logWarn(`Rejected message ${messageId} from ${senderId || 'unknown-sender'} under policy ${access.policy}`);
           return;
         }
 
@@ -759,6 +787,10 @@ async function startFeishuMonitor(): Promise<void> {
           ts = new Date().toISOString();
         }
 
+        logInfo(
+          `Inbound message ${messageId} from ${senderId || 'unknown-sender'} in ${chatType} chat ${chatId}: ${clipForLog(textContent)}`,
+        );
+
         // Push to Claude Code via MCP notification
         await mcp.notification({
           method: 'notifications/claude/channel',
@@ -774,8 +806,11 @@ async function startFeishuMonitor(): Promise<void> {
             },
           },
         });
+        logInfo(
+          `Delivered message ${messageId} to Claude channel. If it does not appear in the session, restart Claude Code with --channels and --dangerously-load-development-channels for this plugin, or check org policy channelsEnabled.`,
+        );
       } catch (err) {
-        console.error(`[feishu] Error handling message:`, err instanceof Error ? err.message : err);
+        logError(`Error handling message: ${err instanceof Error ? err.message : String(err)}`);
       }
     },
   } as any);
@@ -791,9 +826,9 @@ async function startFeishuMonitor(): Promise<void> {
 
   try {
     await wsClient.start({ eventDispatcher: dispatcher });
-    console.error('[feishu] WebSocket connected, listening for messages...');
+    logInfo('WebSocket connected, listening for messages...');
   } catch (err) {
-    console.error(`[feishu] WebSocket connection failed:`, err instanceof Error ? err.message : err);
+    logError(`WebSocket connection failed: ${err instanceof Error ? err.message : String(err)}`);
   }
 }
 
@@ -801,8 +836,12 @@ async function startFeishuMonitor(): Promise<void> {
 // Graceful shutdown
 // ---------------------------------------------------------------------------
 
+let shuttingDown = false;
+
 function shutdown(): void {
-  console.error('[feishu] Shutting down...');
+  if (shuttingDown) return;
+  shuttingDown = true;
+  logInfo('Shutting down...');
   if (wsClient) {
     try {
       // WSClient API varies — try common close methods
@@ -814,6 +853,8 @@ function shutdown(): void {
   process.exit(0);
 }
 
+process.stdin.on('end', shutdown);
+process.stdin.on('close', shutdown);
 process.on('SIGTERM', shutdown);
 process.on('SIGINT', shutdown);
 
@@ -824,12 +865,15 @@ process.on('SIGINT', shutdown);
 async function main(): Promise<void> {
   // Connect MCP first (must happen before any other async work)
   await mcp.connect(new StdioServerTransport());
+  logInfo(
+    'Connected to Claude Code over stdio. Custom channel plugins must be enabled with both --channels and --dangerously-load-development-channels during the research preview.',
+  );
 
   // Then start Feishu WebSocket monitoring
   await startFeishuMonitor();
 }
 
 main().catch((err) => {
-  console.error('[feishu] Fatal error:', err);
+  logError(`Fatal error: ${err instanceof Error ? err.stack ?? err.message : String(err)}`);
   process.exit(1);
 });

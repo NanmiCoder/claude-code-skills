@@ -47,18 +47,20 @@ FEISHU_BRAND=feishu
 2. Write the `.env` file with the credentials
 3. Inform the user to restart Claude Code with the channel flag:
    ```bash
-   claude --dangerously-load-development-channels plugin:feishu-channel
+   claude --channels plugin:feishu-channel --dangerously-load-development-channels plugin:feishu-channel
    ```
    Or if using plugin-dir for local development:
    ```bash
-   claude --plugin-dir /path/to/claude-code-skills/plugins/feishu-channel --dangerously-load-development-channels plugin:feishu-channel
+   claude --plugin-dir /path/to/claude-code-skills/plugins/feishu-channel --channels server:feishu --dangerously-load-development-channels server:feishu
    ```
+   Explain that during the research preview, using only `--channels` or only loading the MCP server is not enough for inbound channel events to reach the Claude Code session.
 
 ## Status Check
 
 To check if the Feishu channel is configured:
 1. Check if `~/.claude/channels/feishu/.env` exists and has `FEISHU_APP_ID` set
-2. Report the configuration status to the user
+2. Remind the user that Team / Enterprise orgs also need `channelsEnabled`
+3. Report the configuration status to the user
 
 ## Security
 

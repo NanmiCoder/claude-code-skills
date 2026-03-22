@@ -64,17 +64,30 @@ FEISHU_BRAND=feishu              # "feishu"（国内）或 "lark"（海外）
 
 **7. 带 channel 标志重新启动。**
 
-不带此标志服务器不会连接 — 退出当前会话，重新启动：
+研究预览期里，自定义 channel 只靠 `--channels` 不够。否则常见现象就是：
+
+- 插件进程会启动
+- 飞书 WebSocket 会连上
+- Claude Code 里也能看到 MCP server 已连接
+- 但飞书消息不会进入当前 session
+
+退出当前会话，使用下面命令重新启动：
 
 ```sh
-claude --channels plugin:feishu-channel@claude-code-skills
+claude \
+  --channels plugin:feishu-channel@claude-code-skills \
+  --dangerously-load-development-channels plugin:feishu-channel@claude-code-skills
 ```
 
 本地开发：
 ```sh
-claude --plugin-dir ./plugins/feishu-channel \
-       --dangerously-load-development-channels plugin:feishu-channel
+claude \
+  --plugin-dir ./plugins/feishu-channel \
+  --channels server:feishu \
+  --dangerously-load-development-channels server:feishu
 ```
+
+如果你所在的是 Team / Enterprise 组织，还需要管理员开启 `channelsEnabled`。没开时也会出现 “MCP 连上了，但 channel 消息收不到” 的现象。
 
 **8. 开始聊天。**
 
@@ -109,6 +122,22 @@ claude --plugin-dir ./plugins/feishu-channel \
 ## 无历史记录和搜索
 
 飞书 Bot API **不提供**消息历史记录和搜索功能。机器人只能看到实时到达的消息。如果 Claude 需要之前的上下文，会让你粘贴或总结。
+
+## 排障
+
+如果飞书那边能确认消息已送达，终端里也看到了：
+
+- `WebSocket connected, listening for messages...`
+- `Inbound message ...`
+- `Delivered message ... to Claude channel`
+
+但 Claude Code session 里仍然没有 `<channel source="feishu" ...>` 事件，优先检查：
+
+1. Claude 是否使用了 `--channels plugin:feishu-channel...`
+2. 是否同时使用了 `--dangerously-load-development-channels plugin:feishu-channel...`
+3. 组织策略里是否启用了 `channelsEnabled`
+4. 当前 Claude session 是否仍然保持打开
+5. 发送者是否被访问策略拒绝
 
 ## License
 
