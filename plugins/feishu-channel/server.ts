@@ -277,6 +277,30 @@ function clipForLog(text: string, max = 160): string {
   return `${normalized.slice(0, max - 1)}…`;
 }
 
+function deliverToClaude(params: {
+  messageId: string;
+  content: string;
+  meta: Record<string, string>;
+}): void {
+  // Match Anthropic's reference channels: emit notifications asynchronously so
+  // the upstream chat/event transport is not blocked on Claude-side delivery.
+  void mcp.notification({
+    method: 'notifications/claude/channel',
+    params: {
+      content: params.content,
+      meta: params.meta,
+    },
+  }).then(() => {
+    logInfo(
+      `Delivered message ${params.messageId} to Claude channel. If it does not appear in the session, restart Claude Code with --channels and --dangerously-load-development-channels for this plugin, or check org policy channelsEnabled.`,
+    );
+  }).catch((err) => {
+    logError(
+      `Failed to deliver message ${params.messageId} to Claude channel: ${err instanceof Error ? err.message : String(err)}`,
+    );
+  });
+}
+
 /**
  * Strip bot @mention from message content.
  * Feishu uses @_user_N placeholders that map to mentions array.
@@ -791,24 +815,18 @@ async function startFeishuMonitor(): Promise<void> {
           `Inbound message ${messageId} from ${senderId || 'unknown-sender'} in ${chatType} chat ${chatId}: ${clipForLog(textContent)}`,
         );
 
-        // Push to Claude Code via MCP notification
-        await mcp.notification({
-          method: 'notifications/claude/channel',
-          params: {
-            content: textContent,
-            meta: {
-              chat_id: chatId,
-              message_id: messageId,
-              user: senderName,
-              user_id: senderId,
-              chat_type: chatType,
-              ts,
-            },
+        deliverToClaude({
+          messageId,
+          content: textContent,
+          meta: {
+            chat_id: chatId,
+            message_id: messageId,
+            user: senderName,
+            user_id: senderId,
+            chat_type: chatType,
+            ts,
           },
         });
-        logInfo(
-          `Delivered message ${messageId} to Claude channel. If it does not appear in the session, restart Claude Code with --channels and --dangerously-load-development-channels for this plugin, or check org policy channelsEnabled.`,
-        );
       } catch (err) {
         logError(`Error handling message: ${err instanceof Error ? err.message : String(err)}`);
       }

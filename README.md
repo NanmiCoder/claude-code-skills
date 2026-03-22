@@ -19,6 +19,7 @@ Claude Code skills created by [程序员阿江-Relakkes](https://space.bilibili.
 /plugin install srt-to-structured-data@claude-code-skills
 /plugin install bilibili-chapter-generator@claude-code-skills
 /plugin install agent-team-orchestrator@claude-code-skills
+/plugin install feishu-channel@claude-code-skills
 ```
 
 ### 3. 启用插件
@@ -31,6 +32,8 @@ Claude Code skills created by [程序员阿江-Relakkes](https://space.bilibili.
 /plugin enable bilibili-chapter-generator@claude-code-skills
 /plugin enable agent-team-orchestrator@claude-code-skills
 ```
+
+飞书 Channel 插件不通过 `/plugin enable` 启用，安装并配置后需要重启 Claude Code。详细说明见 [plugins/feishu-channel/README.md](plugins/feishu-channel/README.md)。
 
 ## 插件列表
 
@@ -100,6 +103,16 @@ Agent Teams 智能编排决策引擎
 ```
 
 功能：自动分析任务复杂度（并行性、通信需求、上下文隔离、文件冲突、成本收益 5 维度），智能决策使用 Subagent 还是 Agent Teams，并提供团队设计指南和 Prompt 模板。
+
+### feishu-channel
+
+飞书消息桥接到 Claude Code
+
+```bash
+/plugin install feishu-channel@claude-code-skills
+```
+
+功能：把飞书机器人消息通过 Channel 推进 Claude Code 当前会话，并支持回复、表情回应、编辑消息。详细说明见 [plugins/feishu-channel/README.md](plugins/feishu-channel/README.md)。
 
 ## 文档
 

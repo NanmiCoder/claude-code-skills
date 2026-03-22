@@ -11,42 +11,29 @@ MCP 服务器通过 WebSocket 连接飞书，为 Claude 提供回复、表情回
 ## 快速开始
 > 默认 open 策略，适用于单用户私聊机器人。配对和白名单设置见 [skills/access/SKILL.md](./skills/access/SKILL.md)。
 
-**1. 在飞书开放平台创建自建应用。**
+**1. 使用飞书官方教程一键创建 Echo Bot。**
 
-打开 [open.feishu.cn/app](https://open.feishu.cn/app) → 创建应用 → 企业自建应用。填写名称和描述。
+直接使用飞书官方教程：[开发一个回声机器人](https://open.feishu.cn/document/develop-an-echo-bot/introduction?from=op_develop_app)。
 
-**2. 开启机器人能力并配置事件。**
+这个流程会直接帮你创建并发布一个可体验的机器人，教程里默认配置的机器人能力、长连接事件订阅和权限已经足够用来体验本插件。不需要再按旧流程手动创建应用、逐项配权限、再单独发布。
 
-- 进入「添加应用能力」→ 选择「机器人」
-- 进入「事件与回调」→ 请求方式选择 **WebSocket**
-- 添加事件：`im.message.receive_v1`
+**2. 获取凭证。**
 
-**3. 申请权限。**
+在飞书开放平台里打开刚刚创建的应用，在「凭证与基础信息」页面复制：
 
-在「权限管理」中申请以下权限：
+- **App ID**（`cli_xxx`）
+- **App Secret**
 
-- `im:message` — 读取和发送消息
-- `im:message:send_as_bot` — 以机器人身份发送消息
-- `im:resource` — 获取消息中的资源文件（图片、文件）
-- `im:message.reactions:write` — 添加表情回应
+**3. 安装插件并配置。**
 
-**4. 发布应用。**
-
-进入「版本管理与发布」→ 创建版本 → 提交。企业内部应用通常自动审核通过。
-
-**5. 获取凭证。**
-
-在「凭证与基础信息」页面，复制 **App ID**（`cli_xxx`）和 **App Secret**。
-
-**6. 安装插件并配置。**
-
-以下是 Claude Code 命令 — 先运行 `claude` 启动会话。
+先正常启动一次 Claude Code，然后执行：
 
 安装插件：
 ```
 /plugin install feishu-channel@claude-code-skills
-/reload-plugins
 ```
+
+安装完以后，`/reload-plugins` 不够，必须退出并重新启动 Claude Code。
 
 配置凭证：
 ```
@@ -62,34 +49,17 @@ FEISHU_VERIFICATION_TOKEN=xxx    # 验证 Token
 FEISHU_BRAND=feishu              # "feishu"（国内）或 "lark"（海外）
 ```
 
-**7. 带 channel 标志重新启动。**
-
-研究预览期里，自定义 channel 只靠 `--channels` 不够。否则常见现象就是：
-
-- 插件进程会启动
-- 飞书 WebSocket 会连上
-- Claude Code 里也能看到 MCP server 已连接
-- 但飞书消息不会进入当前 session
+**4. 重新启动 Claude Code。**
 
 退出当前会话，使用下面命令重新启动：
 
 ```sh
-claude \
-  --channels plugin:feishu-channel@claude-code-skills \
-  --dangerously-load-development-channels plugin:feishu-channel@claude-code-skills
-```
-
-本地开发：
-```sh
-claude \
-  --plugin-dir ./plugins/feishu-channel \
-  --channels server:feishu \
-  --dangerously-load-development-channels server:feishu
+claude --allow-dangerously-skip-permissions --dangerously-load-development-channels plugin:feishu-channel@claude-code-skills
 ```
 
 如果你所在的是 Team / Enterprise 组织，还需要管理员开启 `channelsEnabled`。没开时也会出现 “MCP 连上了，但 channel 消息收不到” 的现象。
 
-**8. 开始聊天。**
+**5. 开始聊天。**
 
 在飞书中私聊你的机器人 — 消息会到达 Claude Code 会话。默认访问策略是 `open`（任何人都可以发消息）。如需限制访问：
 
@@ -133,11 +103,12 @@ claude \
 
 但 Claude Code session 里仍然没有 `<channel source="feishu" ...>` 事件，优先检查：
 
-1. Claude 是否使用了 `--channels plugin:feishu-channel...`
-2. 是否同时使用了 `--dangerously-load-development-channels plugin:feishu-channel...`
-3. 组织策略里是否启用了 `channelsEnabled`
-4. 当前 Claude session 是否仍然保持打开
-5. 发送者是否被访问策略拒绝
+1. Claude 是否使用了 `--allow-dangerously-skip-permissions --dangerously-load-development-channels plugin:feishu-channel@claude-code-skills`
+2. 组织策略里是否启用了 `channelsEnabled`
+3. 当前 Claude session 是否仍然保持打开
+4. 发送者是否被访问策略拒绝
+
+如果你刚执行过 `/plugin install feishu-channel@claude-code-skills`，但飞书消息完全没有进入会话，先退出 Claude Code 再按上面的启动命令重启，不要只执行 `/reload-plugins`。
 
 ## License
 
