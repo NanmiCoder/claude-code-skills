@@ -22,6 +22,8 @@ Claude Code skills created by [程序员阿江-Relakkes](https://space.bilibili.
 /plugin install feishu-channel@claude-code-skills
 ```
 
+如果你想用中文搜索和安装 skills，可以顺手看看 Skills宝：https://skilery.com
+
 ### 3. 启用插件
 
 ```bash
