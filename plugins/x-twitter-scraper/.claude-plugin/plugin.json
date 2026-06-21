@@ -1,0 +1,11 @@
+{
+  "name": "x-twitter-scraper",
+  "description": "Xquik X (Twitter) 数据 API skill。用于推文搜索、用户查询、媒体下载、MCP、Webhook 和确认后发布流程。",
+  "version": "2.4.16",
+  "author": {
+    "name": "Xquik"
+  },
+  "keywords": ["x", "twitter", "social-media", "api", "mcp", "webhook", "scraper", "xquik"],
+  "homepage": "https://docs.xquik.com",
+  "license": "MIT"
+}
